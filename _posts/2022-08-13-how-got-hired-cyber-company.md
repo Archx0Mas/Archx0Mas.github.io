@@ -2,7 +2,7 @@
 layout: post
 toc: true
 title: "How i got hired in company without school or certification?"
-categories: cyber, interview
+categories: cyber interview
 tags: [company, red team, pentester, interview]
 author:
   - Franko Janku
