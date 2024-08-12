@@ -2,7 +2,7 @@
 layout: post
 title: "Red Team vs Penetration Testing"
 categories: offensive cyber paths
-tags:[red-team, penetration-test]
+tags: [red-team, penetration-test]
 ---
 
 What is penetration testing and what is the difference with the red team?
