@@ -6,7 +6,7 @@ categories: offensive cyber paths
 tags: [red-team, penetration-test]
 ---
 
-<img src="{{ site.baseurl }}/assets/images/attack.jpeg" alt="attack and think like a criminal" style="width:auto; height:auto;">
+<img src="{{ site.baseurl }}/assets/images/attack.jpeg" alt="attack and think like a criminal" style="width:1000; height:auto;">
 What is penetration testing and what is the difference with the red team?
 Credits for explanation belongs to: https://www.mitnicksecurity.com/blog/red-team-operations-vs.-penetration-testing
 
