@@ -7,10 +7,11 @@ tags: [red-team, penetration-test]
 author:
   - Franko Janku
 ---
-<img src="{{ site.baseurl }}/assets/images/attack.jpeg" alt="attack and think like a criminal" style="width:1000; height:auto;">
 
 What is penetration testing and what is the difference with the red team?
 Credits for explanation belongs to: https://www.mitnicksecurity.com/blog/red-team-operations-vs.-penetration-testing
+
+<img src="{{ site.baseurl }}/assets/images/attack.jpeg" alt="attack and think like a criminal" style="width:1000; height:auto;">
 
 ## What is a Penetration Test?
 A penetration test is a simulated cyber attack against your company’s computer network systems, devices, and people. Trusted, experienced cybersecurity experts attempt to infiltrate a targeted network to find vulnerabilities— all aimed at giving their client insights into hardening their security before a real hacker finds and exploits these weaknesses.
