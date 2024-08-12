@@ -4,6 +4,9 @@
 - title: GitHub
   url: https://github.com/Archx0Mas
   icon: fab fa-github
+- title: Medium
+  url: https://medium.com/@yourprofile
+  icon: fab fa-medium
 - title: HackerOne
   url: https://hackerone.com/mrfrank
   icon: fab fa-hackerone
