@@ -7,7 +7,6 @@ tags: [red-team, penetration-test]
 author:
   - Franko Janku
 ---
-
 <img src="{{ site.baseurl }}/assets/images/attack.jpeg" alt="attack and think like a criminal" style="width:1000; height:auto;">
 
 What is penetration testing and what is the difference with the red team?
