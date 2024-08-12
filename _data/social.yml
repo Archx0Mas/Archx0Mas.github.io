@@ -1,6 +1,9 @@
 - title: Linkedin
-  url: https://
+  url: https://www.linkedin.com/in/franko-janku
   icon: fab fa-linkedin
 - title: GitHub
   url: https://github.com/Archx0Mas
   icon: fab fa-github
+- title: HackerOne
+  url: https://hackerone.com/mrfrank
+  icon: fab fa-hackerone
