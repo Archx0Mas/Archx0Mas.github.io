@@ -1,4 +1,4 @@
-title: Blog
+title: CyberSec Blog
 description: CyberSec 
 author: Franko Janku
 avatar: /logo.png
@@ -30,9 +30,9 @@ exclude:
 # Jekyll SEO Tag (Optional)
 # =========================
 twitter:
-  username: ngzhio
+  username:
   card: summary
-logo: logo.png
+logo: /logo.png
 social:
   name: Franko Janku
   links:

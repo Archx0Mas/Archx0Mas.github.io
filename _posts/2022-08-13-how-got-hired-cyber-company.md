@@ -8,7 +8,8 @@ author:
   - Franko Janku
 ---
 
-Hi everybody, in this post I will show how I got hired by Silensec cyber company.
+## Hi everybody, in this post I will show how I got hired by Silensec cyber company.
+
 This article will be all about how I got hired by an international cyber security company.
 
 ## Little Story
