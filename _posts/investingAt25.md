@@ -8,4 +8,4 @@ author:
   - Franko Janku
 ---
 
-## What is penetration testing and what is the difference with the red team?
+## What is penetration testing and what is the difference with the red team
