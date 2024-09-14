@@ -1,7 +1,7 @@
 ---
 layout: post
 toc: true
-title: "[Coming soon] How i invested and made my first 0 at 25 years old?"
+title: "[Coming soon] How i invested in myself and made my first 100 at 25 years old?"
 categories: investing
 tags: [investing]
 author:
