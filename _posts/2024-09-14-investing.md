@@ -1,11 +1,11 @@
 ---
 layout: post
 toc: true
-title: "How i invested in myself and made my first 100k$ at 25 years old?"
+title: "[Coming soon] How i invested and made my first 0 at 25 years old?"
 categories: investing
 tags: [investing]
 author:
   - Franko Janku
 ---
 
-## What is penetration testing and what is the difference with the red team
+## {Article Coming Soon} The biggest investment is investing in yourself and then you can invest in many things like stock,ESOP,crypto ....
