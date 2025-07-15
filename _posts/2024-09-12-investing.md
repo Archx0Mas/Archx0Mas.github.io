@@ -5,7 +5,7 @@ title: "From Cyber to Investor: How I Achieved a Six-Figure Net Worth by Age 26"
 categories: investing
 tags: [investing]
 author:
-  - Author: Franko Janku
+  - Author:Franko Janku
 ---
 
 ##The biggest investment is investing in yourself and then managing the net income is your key to your next achievement. (This is a phrase that i like too much)
