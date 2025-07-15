@@ -1,5 +1,5 @@
 title: CyberSec
-description: CyberSec 
+description: Cyber Security Blog
 author: Franko Janku
 avatar: /logo.png
 email: franko.janku669@protonmail.com
@@ -30,13 +30,12 @@ exclude:
 
 # Jekyll SEO Tag (Optional)
 # =========================
-twitter:
-  username:
-  card: summary
+
 logo: /logo.png
 social:
   name: Franko Janku
   links:
     - https://github.com/Archx0Mas
+    - https://www.linkedin.com/in/franko-janku
 google_site_verification: u4WXQl0Eu66rsQo2kRdCNx
 lang: en
