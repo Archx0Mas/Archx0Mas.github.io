@@ -1,7 +1,7 @@
 ---
 layout: post
 toc: true
-title: "[Article Coming soon] From Cyber to Investor: How i made 6 figures net worth at 26 years old?"
+title: "From Cyber to Investor: How i achieved 6 figures net worth at 26 years old?"
 categories: investing
 tags: [investing]
 author:
