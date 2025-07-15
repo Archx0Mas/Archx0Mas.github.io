@@ -4,6 +4,7 @@ author: Franko Janku
 avatar: /logo.png
 email: franko.janku669@protonmail.com
 
+future: true
 plugins:
   - jekyll-seo-tag
   - jekyll-feed
