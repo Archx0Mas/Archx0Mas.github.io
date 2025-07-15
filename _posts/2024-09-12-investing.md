@@ -3,7 +3,7 @@ layout: post
 toc: true
 title: "From Cyber to Investor: How I Achieved a Six-Figure Net Worth by Age 26"
 categories: investing
-tags: [investing]
+tags: [investing] 
 author:
   - Author:Franko Janku
 ---
