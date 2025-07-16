@@ -1,7 +1,7 @@
 ---
 layout: post
 toc: true
-title: "From Cyber to Investor: How I Achieved a Six-Figure Net Worth by Age 26"
+title: "From Cyber to Investor: How I Achieved Six-Figure Net Worth by Age 26"
 categories: investing
 tags: [investing] 
 author:
