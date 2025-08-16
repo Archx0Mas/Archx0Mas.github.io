@@ -9,13 +9,14 @@ author:
 ---
 
 ##The biggest investment is investing in yourself and then managing the net income is your key to your next achievement.
-Note: Net worth is not net income, having net worth of 6 figures doesn't mean im taking 6 figures per year. It's the total worth of assets - liabilities.
+
+Note: Net worth is not net income, having net worth of 6 figures doesn't mean you are taking 6 figures per year. It's the total worth of assets - liabilities.
 
 
 Building wealth at 26 years old in Albania is quite difficult. The average salary is around $750 per month, and in a country with limited financial opportunities, it can take decades to reach your first 6 figures net worth. 
 For me, it took four years — not including the years I spent studying before landing my first tech job.
 
-If you're a young employee like me, your biggest challenge will be managing your income. With inflation rising every year and rent prices constantly increasing, it becomes nearly impossible for anyone aged 22-28 to afford their first home.
+If you're a young employee like me, your biggest challenge will be managing your income. With inflation rising every year and rent prices constantly increasing, it becomes nearly impossible for anyone that is young to afford their first home.
 
 NOTE: This isn’t a financial guide, a consulting service, or one of those “make $100K from home” courses 😂. 
 I'm simply sharing how I reached a personal milestone: building a net worth of over $100K without any debt by the age of 26. Most people my age are just starting their careers after university and are still searching for a decent-paying job.
