@@ -1,14 +1,15 @@
 ---
 layout: post
 toc: true
-title: "Achieving a Six-Figure Net Worth by Age 26"
+title: "Achieving Six-Figure Net Worth by Age 26"
 categories: investing
 tags: [investing] 
 author:
   - Author: Franko Janku
 ---
 
-##The biggest investment is investing in yourself and then managing the net income is your key to your next achievement.(This is a phrase that i like)
+##The biggest investment is investing in yourself and then managing the net income is your key to your next achievement.
+Note: Net worth is not net income, having net worth of 6 figures doesn't mean im taking 6 figures per year. It's the total worth of assets - liabilities.
 
 
 Building wealth at 26 years old in Albania is quite difficult. The average salary is around $750 per month, and in a country with limited financial opportunities, it can take decades to reach your first 6 figures net worth. 
@@ -21,13 +22,13 @@ I'm simply sharing how I reached a personal milestone: building a net worth of o
 
 The Approach I Took: Save & Invest
 
-Your income is the key. What you earn annually should work for you — through investments that generate passive income.
+Your income is the key. What you earn annually should work for you, through investments that generate passive income.
 
 Let’s take an example: if you earn $60K a year (or $5K/month), will you spend it all or invest a portion of it?
 
-Personally, I went hardcore with saving — up to 85% of my income. Yes, it’s mentally tough, but the results are worth it. You’ve heard the phrase: “No pain, no gain.” It applies here — not physically, but financially and mentally.
+Personally, I went hardcore with saving — up to 85% of my income. Yes, it’s mentally tough, but the results are worth it. You’ve heard the phrase: “No pain, no gain.” It applies here,not physically, but financially and mentally.
 
-Ask yourself as a young person: What will you do with your money if you just save it? Saving alone doesn’t protect your money from inflation, which erodes its value over time.
+Ask yourself as a young person: What will you do with your money if you just save it? Saving alone doesn’t protect your money from inflation, which decreases its value over time.
 
 How I Started Investing at 24
 
@@ -35,8 +36,8 @@ I began by investing in a fund through a local bank. As a first-time investor, t
 
 This was a better option than keeping the money in saving account with minimal interest. My chosen fund was low-risk and stable, investing mainly in government bonds. Eventually, I planned to withdraw the money to help purchase my first home.
 
-Eliminating rent was a big milestone. Owning property — especially in the capital city — is a long-term investment. While I gave up the daily passive income from the fund, I saved more by no longer paying rent.I consider this one of the smartest financial moves I’ve made until now.
+Eliminating rent was a big milestone. Owning property, especially in the capital city, is a long-term investment. While I gave up the daily passive income from the fund, I saved more by no longer paying rent. I consider this one of the smartest financial moves I’ve made until now.
 
-I’m not telling you to invest in funds — you have many other options: from high-risk assets like Bitcoin to the stock market, forex, and more. The important thing is to start.
+I’m not telling you to invest in funds — you have many other options: like Bitcoin,stock market, ETFs, and more. The important thing is to start as soon as possible.
 
-Mindset is everything. These things aren’t taught in school. For me, I followed Dave Ramsey's philosophy: avoid debt, buy your first home as soon as possible, and invest at least 15% of your income.
+Mindset is everything. These things aren’t taught in school for sure. For me, I followed Dave Ramsey's philosophy: avoid debt, buy your first home as soon as possible, and invest at least 15% of your income.
