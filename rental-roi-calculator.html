@@ -315,7 +315,6 @@ enzimet</h2>
         const annualInsurance = parseFloat(document.getElementById('annualInsurance').value) || 0;
         
         const rawRent = parseFloat(document.getElementById('rent').value) || 0;
-        const vacancyRate = parseFloat(document.getElementById('vacancyRate').value) || 0;
         const maintenanceRate = parseFloat(document.getElementById('maintenanceRate').value) || 0;
         
         const incomeTaxRate = parseFloat(document.getElementById('incomeTaxRate').value) || 0;
@@ -344,8 +343,6 @@ enzimet</h2>
         const totalInitialInvestment = downPayment;
 
         // --- YEAR 1 OPERATIONS (MONTHLY) ---
-        const vacancyCost = rawRent * (vacancyRate / 100);
-        const effectiveRent = rawRent - vacancyCost; 
         
         const maintenanceCost = effectiveRent * (maintenanceRate / 100);
         const taxCost = annualPropTax / 12;
@@ -362,7 +359,7 @@ enzimet</h2>
         }
 
         const netCashFlow = preTaxCashFlow - incomeTaxCost;
-        const totalOutflow = mortgagePayment + operatingExpenses + incomeTaxCost + vacancyCost;
+        const totalOutflow = mortgagePayment + operatingExpenses + incomeTaxCost;
 
         // --- METRICS ---
         const annualCashFlow = netCashFlow * 12;
@@ -385,18 +382,17 @@ enzimet</h2>
 
         document.getElementById('piPayment').innerText = fmt(mortgagePayment);
         document.getElementById('taxInsPayment').innerText = fmt(taxCost + insCost);
-        document.getElementById('vacMaintPayment').innerText = fmt(vacancyCost + maintenanceCost);
+        document.getElementById('vacMaintPayment').innerText = fmt(maintenanceCost);
         document.getElementById('incTaxPayment').innerText = fmt(incomeTaxCost);
         document.getElementById('totalExpenses').innerText = fmt(totalOutflow);
 
-        updateDonut(mortgagePayment, taxCost+insCost, vacancyCost+maintenanceCost, incomeTaxCost, netCashFlow);
+        updateDonut(mortgagePayment, taxCost+insCost, maintenanceCost, incomeTaxCost, netCashFlow);
         
         updateProjection(
             rawRent, 
             mortgagePayment, 
             annualPropTax, 
             annualInsurance, 
-            vacancyRate, 
             maintenanceRate, 
             incomeTaxRate, 
             rentGrowth
@@ -428,7 +424,7 @@ enzimet</h2>
     }
 
     // --- ANNUAL PROFIT GRAPH (NO COMPOUNDING) ---
-    function updateProjection(startRent, mortgage, startTax, startIns, vacRate, maintRate, taxRate, rentGrowth) {
+    function updateProjection(startRent, mortgage, startTax, startIns, maintRate, taxRate, rentGrowth) {
         const ctx = document.getElementById('lineChart').getContext('2d');
         if (lineChart) lineChart.destroy();
 
@@ -452,8 +448,6 @@ enzimet</h2>
             let monthlyRent = startRent + (annualRentIncreaseAmount * (i - 1));
             
             let annualRent = monthlyRent * 12;
-            let vacancyLoss = annualRent * (vacRate/100);
-            let effectiveAnnualRent = annualRent - vacancyLoss;
             
             let annualMaint = effectiveAnnualRent * (maintRate/100);
             let annualFixedOps = (currentTax * 12) + (currentIns * 12);
