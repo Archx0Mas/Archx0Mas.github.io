@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rental Analyzer v13</title>
+    <title>Rental ROI Calculator</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -130,10 +130,10 @@
     <div class="input-column">
         
         <div class="card">
-            <h2><i class="fas fa-home"></i> Acquisition</h2>
+            <h2><i class="fas fa-home"></i> Prona </h2>
             <div class="input-grid">
                 <div class="input-wrapper">
-                    <label>Purchase Price</label>
+                    <label>Cmimi i Prones</label>
                     <div class="input-icon-group">
                         <i class="fas fa-dollar-sign"></i>
                         <input type="number" id="price" value="100000">
@@ -142,21 +142,21 @@
                 </div>
 
             <div class="toggle-box" style="margin-top: 15px;">
-                <span class="toggle-label"><i class="fas fa-money-bill-wave"></i> Bought with Cash?</span>
+                <span class="toggle-label"><i class="fas fa-money-bill-wave"></i> E Blet me Cash?</span>
                 <input type="checkbox" id="cashPurchase" onchange="toggleMortgageInputs()">
             </div>
 
             <div id="mortgageSection">
                 <div class="input-grid">
                     <div class="input-wrapper">
-                        <label>Down Payment (%)</label>
+                        <label>Parapagim (%)</label>
                         <div class="input-icon-group">
                             <i class="fas fa-percentage"></i>
                             <input type="number" id="downPaymentPercent" value="20">
                         </div>
                     </div>
                     <div class="input-wrapper">
-                        <label>Interest Rate (%)</label>
+                        <label>Norma e Interesit (%)</label>
                         <div class="input-icon-group">
                             <i class="fas fa-percentage"></i>
                             <input type="number" id="interestRate" value="6.5" step="0.1">
@@ -164,7 +164,7 @@
                     </div>
                 </div>
                 <div class="input-wrapper" style="margin-top: 15px;">
-                    <label>Loan Term (Years)</label>
+                    <label>Percakto Kohen e Kredis (Vite)</label>
                     <div class="input-icon-group">
                         <i class="fas fa-calendar"></i>
                         <input type="number" id="loanTerm" value="30">
@@ -174,49 +174,49 @@
         </div>
 
         <div class="card">
-            <h2><i class="fas fa-wallet"></i> Operations</h2>
+            <h2><i class="fas fa-wallet"></i> Fitimi Pasiv & Shpenzimet </h2>
             <div class="input-grid">
                 <div class="input-wrapper">
-                    <label>Monthly Rent</label>
+                    <label>Qeraja Mujore</label>
                     <div class="input-icon-group">
                         <i class="fas fa-dollar-sign"></i>
                         <input type="number" id="rent" value="1200">
                     </div>
                 </div>
                 <div class="input-wrapper">
-                    <label>Vacancy Rate (%)</label>
+                    <label>test</label>
                     <div class="input-icon-group">
                         <i class="fas fa-door-open"></i>
-                        <input type="number" id="vacancyRate" value="5">
+                        <input type="number" id="vacancyRate" value="0">
                     </div>
                 </div>
             </div>
 
-            <h3>Annual Expenses</h3>
+            <h3>Shpenzimet Vjetore</h3>
             <div class="input-grid">
                 <div class="input-wrapper">
-                    <label>Property Tax ($)</label>
+                    <label>Taksa Prones</label>
                     <div class="input-icon-group">
                         <i class="fas fa-file-invoice-dollar"></i>
                         <input type="number" id="annualTax" value="1500">
                     </div>
                 </div>
                 <div class="input-wrapper">
-                    <label>Insurance ($)</label>
+                    <label>Sigurimi i Prones</label>
                     <div class="input-icon-group">
                         <i class="fas fa-shield-alt"></i>
                         <input type="number" id="annualInsurance" value="800">
                     </div>
                 </div>
                 <div class="input-wrapper">
-                    <label>Maintenance (%)</label>
+                    <label>Rregullimet (%)</label>
                     <div class="input-icon-group">
                         <i class="fas fa-tools"></i>
                         <input type="number" id="maintenanceRate" value="5">
                     </div>
                 </div>
                  <div class="input-wrapper">
-                    <label>Income Tax Rate (%)</label>
+                    <label>Tatim Fitimi (%)</label>
                     <div class="input-icon-group">
                         <i class="fas fa-user-tie"></i>
                         <input type="number" id="incomeTaxRate" value="0">
@@ -226,20 +226,20 @@
         </div>
 
         <div class="card">
-            <h2><i class="fas fa-chart-line"></i> Rent Growth</h2>
+            <h2><i class="fas fa-chart-line"></i> Rritja e Qerase</h2>
             <div class="input-grid">
                 <div class="input-wrapper">
-                    <label>Annual Rent Increase (%)</label>
+                    <label>Rritja e Qerase Vjetore (%)</label>
                     <div class="input-icon-group">
                         <i class="fas fa-arrow-up"></i>
                         <input type="number" id="rentIncrease" value="3" step="0.1">
                     </div>
                 </div>
                 <div style="font-size: 0.8em; color: #64748b; align-self: center;">
-                    *Calculated as Simple Interest (No Compounding)
+                    *Llogaritur si Interes i Thjesht (Jo Compounding)
                 </div>
             </div>
-            <button class="calc-btn" onclick="calculate()">Recalculate Analysis</button>
+            <button class="calc-btn" onclick="calculate()">Llogarit R.O.I e Qerase</button>
         </div>
 
     </div>
@@ -253,7 +253,7 @@
 
             <div class="wealth-box">
                 <div class="big-number" id="annualProfitNet">$0</div>
-                <div class="big-label">Annual Profit Net</div>
+                <div class="big-label">Fitimi Vjetor Neto</div>
             </div>
 
             <div class="stat-grid">
@@ -268,19 +268,19 @@
             </div>
 
             <div style="background: #f8fafc; padding: 15px; border-radius: 8px;">
-                <div class="breakdown-row"><span>Mortgage (P&I)</span><strong id="piPayment">$0</strong></div>
-                <div class="breakdown-row"><span>Taxes & Ins</span><strong id="taxInsPayment">$0</strong></div>
-                <div class="breakdown-row"><span>Vacancy & Maint.</span><strong id="vacMaintPayment">$0</strong></div>
-                <div class="breakdown-row"><span>Income Tax</span><strong id="incTaxPayment" style="color:var(--primary);">$0</strong></div>
-                <div class="breakdown-row total"><span>Total Monthly Cost</span><strong id="totalExpenses">$0</strong></div>
+                <div class="breakdown-row"><span>Kredia Prones (P&I)</span><strong id="piPayment">$0</strong></div>
+                <div class="breakdown-row"><span>Taksa e Prones & Sigurimi</span><strong id="taxInsPayment">$0</strong></div>
+                <div class="breakdown-row"><span>Rregullimet</span><strong id="vacMaintPayment">$0</strong></div>
+                <div class="breakdown-row"><span>Tatimi Fitimit</span><strong id="incTaxPayment" style="color:var(--primary);">$0</strong></div>
+                <div class="breakdown-row total"><span>Kostoja Mujore Totale</span><strong id="totalExpenses">$0</strong></div>
             </div>
             
-            <h3 style="margin-top: 20px;">Monthly Costs Breakdown</h3>
+            <h3 style="margin-top: 20px;"> Grafiku i Fitimit & Kostos Mujore</h3>
             <div class="chart-wrapper" style="height: 150px;">
                 <canvas id="donutChart"></canvas>
             </div>
 
-            <h3 style="margin-top: 20px;">Annual Net Profit (Year by Year)</h3>
+            <h3 style="margin-top: 20px;">Fitimi Vjetor Neto (Vit pas Viti)</h3>
             <div class="chart-wrapper">
                 <canvas id="lineChart"></canvas>
             </div>
