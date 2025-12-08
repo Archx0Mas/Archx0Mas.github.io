@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rental Analyzer v13</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4338ca;
+            --primary-light: #e0e7ff;
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --accent: #10b981; 
+            --danger: #ef4444;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* LAYOUT */
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 30px;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .app-container { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            background: var(--surface);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 20px;
+        }
+
+        .sticky-sidebar { position: sticky; top: 20px; }
+
+        h2 { margin: 0 0 20px 0; color: var(--text-main); font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+        h2 i { color: var(--primary); }
+        h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin: 25px 0 10px 0; }
+
+        /* INPUTS */
+        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .input-wrapper { margin-bottom: 5px; }
+        label { display: block; font-size: 0.85em; font-weight: 600; margin-bottom: 6px; color: var(--text-muted); }
+
+        .input-icon-group { position: relative; display: flex; align-items: center; }
+        .input-icon-group i { position: absolute; left: 12px; color: #94a3b8; font-size: 0.9em; pointer-events: none; }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px 12px 12px 35px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            background: #f8fafc;
+            font-weight: 500;
+        }
+        input:focus { outline: none; border-color: var(--primary); background: #fff; box-shadow: 0 0 0 4px var(--primary-light); }
+
+        .toggle-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--primary-light);
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #c7d2fe;
+        }
+        .toggle-label { font-weight: 600; color: var(--primary); margin: 0; font-size: 0.95rem;}
+        input[type="checkbox"] { accent-color: var(--primary); transform: scale(1.2); cursor: pointer; }
+
+        #mortgageSection { transition: all 0.4s; overflow: hidden; max-height: 500px; opacity: 1; }
+        #mortgageSection.hidden { max-height: 0; opacity: 0; margin: 0; }
+
+        /* RESULTS */
+        .results-header { text-align: center; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px dashed #e2e8f0; }
+        .big-number { font-size: 2.5rem; font-weight: 800; color: var(--text-main); letter-spacing: -1px; line-height: 1; }
+        .big-label { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; margin-top: 5px; }
+
+        /* Annual Profit Box (Green) */
+        .wealth-box {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
+        }
+        .wealth-box .big-number { color: white; }
+        .wealth-box .big-label { color: #d1fae5; }
+
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .stat-box { background: #f1f5f9; padding: 12px; border-radius: 8px; text-align: center; }
+        
+        .breakdown-row { display: flex; justify-content: space-between; font-size: 0.9rem; padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: var(--text-muted); }
+        .breakdown-row strong { color: var(--text-main); }
+        .breakdown-row.total { border-top: 2px solid #e2e8f0; border-bottom: none; padding-top: 12px; margin-top: 5px; color: var(--text-main); font-weight: 700; }
+
+        .calc-btn { width: 100%; background: var(--text-main); color: white; border: none; padding: 16px; border-radius: 10px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: transform 0.1s; }
+        .calc-btn:active { transform: scale(0.98); }
+
+        .chart-wrapper { height: 200px; width: 100%; position: relative; margin-top: 15px; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    
+    <div class="input-column">
+        
+        <div class="card">
+            <h2><i class="fas fa-home"></i> Acquisition</h2>
+            <div class="input-grid">
+                <div class="input-wrapper">
+                    <label>Purchase Price</label>
+                    <div class="input-icon-group">
+                        <i class="fas fa-dollar-sign"></i>
+                        <input type="number" id="price" value="100000">
+                    </div>
+                </div>
+                </div>
+
+            <div class="toggle-box" style="margin-top: 15px;">
+                <span class="toggle-label"><i class="fas fa-money-bill-wave"></i> Bought with Cash?</span>
+                <input type="checkbox" id="cashPurchase" onchange="toggleMortgageInputs()">
+            </div>
+
+            <div id="mortgageSection">
+                <div class="input-grid">
+                    <div class="input-wrapper">
+                        <label>Down Payment (%)</label>
+                        <div class="input-icon-group">
+                            <i class="fas fa-percentage"></i>
+                            <input type="number" id="downPaymentPercent" value="20">
+                        </div>
+                    </div>
+                    <div class="input-wrapper">
+                        <label>Interest Rate (%)</label>
+                        <div class="input-icon-group">
+                            <i class="fas fa-percentage"></i>
+                            <input type="number" id="interestRate" value="6.5" step="0.1">
+                        </div>
+                    </div>
+                </div>
+                <div class="input-wrapper" style="margin-top: 15px;">
+                    <label>Loan Term (Years)</label>
+                    <div class="input-icon-group">
+                        <i class="fas fa-calendar"></i>
+                        <input type="number" id="loanTerm" value="30">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-wallet"></i> Operations</h2>
+            <div class="input-grid">
+                <div class="input-wrapper">
+                    <label>Monthly Rent</label>
+                    <div class="input-icon-group">
+                        <i class="fas fa-dollar-sign"></i>
+                        <input type="number" id="rent" value="1200">
+                    </div>
+                </div>
+                <div class="input-wrapper">
+                    <label>Vacancy Rate (%)</label>
+                    <div class="input-icon-group">
+                        <i class="fas fa-door-open"></i>
+                        <input type="number" id="vacancyRate" value="5">
+                    </div>
+                </div>
+            </div>
+
+            <h3>Annual Expenses</h3>
+            <div class="input-grid">
+                <div class="input-wrapper">
+                    <label>Property Tax ($)</label>
+                    <div class="input-icon-group">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                        <input type="number" id="annualTax" value="1500">
+                    </div>
+                </div>
+                <div class="input-wrapper">
+                    <label>Insurance ($)</label>
+                    <div class="input-icon-group">
+                        <i class="fas fa-shield-alt"></i>
+                        <input type="number" id="annualInsurance" value="800">
+                    </div>
+                </div>
+                <div class="input-wrapper">
+                    <label>Maintenance (%)</label>
+                    <div class="input-icon-group">
+                        <i class="fas fa-tools"></i>
+                        <input type="number" id="maintenanceRate" value="5">
+                    </div>
+                </div>
+                 <div class="input-wrapper">
+                    <label>Income Tax Rate (%)</label>
+                    <div class="input-icon-group">
+                        <i class="fas fa-user-tie"></i>
+                        <input type="number" id="incomeTaxRate" value="0">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-chart-line"></i> Rent Growth</h2>
+            <div class="input-grid">
+                <div class="input-wrapper">
+                    <label>Annual Rent Increase (%)</label>
+                    <div class="input-icon-group">
+                        <i class="fas fa-arrow-up"></i>
+                        <input type="number" id="rentIncrease" value="3" step="0.1">
+                    </div>
+                </div>
+                <div style="font-size: 0.8em; color: #64748b; align-self: center;">
+                    *Calculated as Simple Interest (No Compounding)
+                </div>
+            </div>
+            <button class="calc-btn" onclick="calculate()">Recalculate Analysis</button>
+        </div>
+
+    </div>
+
+    <div class="sticky-sidebar">
+        <div class="card">
+            <div class="results-header">
+                <span class="big-number" id="monthlyCashFlow">$0</span>
+                <div class="big-label">Est. Monthly Cash Flow</div>
+            </div>
+
+            <div class="wealth-box">
+                <div class="big-number" id="annualProfitNet">$0</div>
+                <div class="big-label">Annual Profit Net</div>
+            </div>
+
+            <div class="stat-grid">
+                <div class="stat-box">
+                    <div id="cocRoi" style="font-weight: 800; color: var(--primary);">0%</div>
+                    <div style="font-size: 0.7em; color: #64748b;">Cash on Cash ROI</div>
+                </div>
+                <div class="stat-box">
+                    <div id="capRate" style="font-weight: 800; color: var(--primary);">0%</div>
+                    <div style="font-size: 0.7em; color: #64748b;">Cap Rate</div>
+                </div>
+            </div>
+
+            <div style="background: #f8fafc; padding: 15px; border-radius: 8px;">
+                <div class="breakdown-row"><span>Mortgage (P&I)</span><strong id="piPayment">$0</strong></div>
+                <div class="breakdown-row"><span>Taxes & Ins</span><strong id="taxInsPayment">$0</strong></div>
+                <div class="breakdown-row"><span>Vacancy & Maint.</span><strong id="vacMaintPayment">$0</strong></div>
+                <div class="breakdown-row"><span>Income Tax</span><strong id="incTaxPayment" style="color:var(--primary);">$0</strong></div>
+                <div class="breakdown-row total"><span>Total Monthly Cost</span><strong id="totalExpenses">$0</strong></div>
+            </div>
+            
+            <h3 style="margin-top: 20px;">Monthly Costs Breakdown</h3>
+            <div class="chart-wrapper" style="height: 150px;">
+                <canvas id="donutChart"></canvas>
+            </div>
+
+            <h3 style="margin-top: 20px;">Annual Net Profit (Year by Year)</h3>
+            <div class="chart-wrapper">
+                <canvas id="lineChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    let donutChart = null; 
+    let lineChart = null;
+
+    window.onload = function() {
+        document.getElementById('cashPurchase').checked = true;
+        toggleMortgageInputs();
+        calculate();
+    }
+
+    function toggleMortgageInputs() {
+        const isCash = document.getElementById('cashPurchase').checked;
+        const section = document.getElementById('mortgageSection');
+        if (isCash) {
+            section.classList.add('hidden');
+        } else {
+            section.classList.remove('hidden');
+        }
+        calculate();
+    }
+
+    function calculate() {
+        // --- INPUTS ---
+        const price = parseFloat(document.getElementById('price').value) || 0;
+        // REMOVED CLOSING COSTS VAR
+        const isCash = document.getElementById('cashPurchase').checked;
+        
+        const annualPropTax = parseFloat(document.getElementById('annualTax').value) || 0;
+        const annualInsurance = parseFloat(document.getElementById('annualInsurance').value) || 0;
+        
+        const rawRent = parseFloat(document.getElementById('rent').value) || 0;
+        const vacancyRate = parseFloat(document.getElementById('vacancyRate').value) || 0;
+        const maintenanceRate = parseFloat(document.getElementById('maintenanceRate').value) || 0;
+        
+        const incomeTaxRate = parseFloat(document.getElementById('incomeTaxRate').value) || 0;
+        const rentGrowth = parseFloat(document.getElementById('rentIncrease').value) || 0;
+
+        // --- ACQUISITION ---
+        let downPayment = price; 
+        let mortgagePayment = 0;
+
+        if (!isCash) {
+            const downPercent = parseFloat(document.getElementById('downPaymentPercent').value) || 0;
+            downPayment = price * (downPercent / 100);
+            const loanAmount = price - downPayment;
+            
+            const rate = parseFloat(document.getElementById('interestRate').value) || 0;
+            const years = parseFloat(document.getElementById('loanTerm').value) || 0;
+            
+            if (rate > 0 && years > 0) {
+                const monthlyRate = (rate / 100) / 12;
+                const numberOfPayments = years * 12;
+                mortgagePayment = (loanAmount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -numberOfPayments));
+            }
+        }
+
+        // Removed closing costs from total investment
+        const totalInitialInvestment = downPayment;
+
+        // --- YEAR 1 OPERATIONS (MONTHLY) ---
+        const vacancyCost = rawRent * (vacancyRate / 100);
+        const effectiveRent = rawRent - vacancyCost; 
+        
+        const maintenanceCost = effectiveRent * (maintenanceRate / 100);
+        const taxCost = annualPropTax / 12;
+        const insCost = annualInsurance / 12;
+
+        const operatingExpenses = taxCost + insCost + maintenanceCost;
+        const noi = effectiveRent - operatingExpenses;
+
+        const preTaxCashFlow = noi - mortgagePayment;
+
+        let incomeTaxCost = 0;
+        if (preTaxCashFlow > 0) {
+            incomeTaxCost = preTaxCashFlow * (incomeTaxRate / 100);
+        }
+
+        const netCashFlow = preTaxCashFlow - incomeTaxCost;
+        const totalOutflow = mortgagePayment + operatingExpenses + incomeTaxCost + vacancyCost;
+
+        // --- METRICS ---
+        const annualCashFlow = netCashFlow * 12;
+        const annualNOI = noi * 12;
+        const capRate = price > 0 ? (annualNOI / price) * 100 : 0;
+        const cocRoi = totalInitialInvestment > 0 ? (annualCashFlow / totalInitialInvestment) * 100 : 0;
+
+        // --- UI UPDATES ---
+        const fmt = (n) => n.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+        
+        const cfEl = document.getElementById('monthlyCashFlow');
+        cfEl.innerText = fmt(netCashFlow);
+        cfEl.style.color = netCashFlow >= 0 ? 'var(--accent)' : 'var(--danger)';
+
+        // UPDATED: Green box now shows Annual Profit Net (Year 1)
+        document.getElementById('annualProfitNet').innerText = fmt(annualCashFlow);
+
+        document.getElementById('cocRoi').innerText = cocRoi.toFixed(2) + '%';
+        document.getElementById('capRate').innerText = capRate.toFixed(2) + '%';
+
+        document.getElementById('piPayment').innerText = fmt(mortgagePayment);
+        document.getElementById('taxInsPayment').innerText = fmt(taxCost + insCost);
+        document.getElementById('vacMaintPayment').innerText = fmt(vacancyCost + maintenanceCost);
+        document.getElementById('incTaxPayment').innerText = fmt(incomeTaxCost);
+        document.getElementById('totalExpenses').innerText = fmt(totalOutflow);
+
+        updateDonut(mortgagePayment, taxCost+insCost, vacancyCost+maintenanceCost, incomeTaxCost, netCashFlow);
+        
+        updateProjection(
+            rawRent, 
+            mortgagePayment, 
+            annualPropTax, 
+            annualInsurance, 
+            vacancyRate, 
+            maintenanceRate, 
+            incomeTaxRate, 
+            rentGrowth
+        );
+    }
+
+    function updateDonut(mortgage, fixedOps, variableOps, tax, profit) {
+        const ctx = document.getElementById('donutChart').getContext('2d');
+        if (donutChart) donutChart.destroy();
+
+        let safeProfit = profit > 0 ? profit : 0;
+
+        donutChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Mortgage', 'Tax/Ins', 'Maint/Vac', 'Inc Tax', 'Profit'],
+                datasets: [{
+                    data: [mortgage, fixedOps, variableOps, tax, safeProfit],
+                    backgroundColor: ['#4338ca', '#f59e0b', '#64748b', '#a855f7', '#10b981'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } }
+            }
+        });
+    }
+
+    // --- ANNUAL PROFIT GRAPH (NO COMPOUNDING) ---
+    function updateProjection(startRent, mortgage, startTax, startIns, vacRate, maintRate, taxRate, rentGrowth) {
+        const ctx = document.getElementById('lineChart').getContext('2d');
+        if (lineChart) lineChart.destroy();
+
+        const labels = [];
+        const profitData = [];
+        
+        // Base starting values
+        let currentTax = startTax / 12;
+        let currentIns = startIns / 12;
+        
+        // Rent Increase Amount (Simple Interest Logic)
+        // If rent is 1000 and growth is 10%, we add 100 every year flat.
+        const annualRentIncreaseAmount = startRent * (rentGrowth / 100);
+
+        for (let i = 1; i <= 30; i++) {
+            labels.push(`Y${i}`);
+            
+            // Simple Linear Rent Growth: StartRent + (YearIndex * IncreaseAmount)
+            // Year 1: StartRent
+            // Year 2: StartRent + IncreaseAmount
+            let monthlyRent = startRent + (annualRentIncreaseAmount * (i - 1));
+            
+            let annualRent = monthlyRent * 12;
+            let vacancyLoss = annualRent * (vacRate/100);
+            let effectiveAnnualRent = annualRent - vacancyLoss;
+            
+            let annualMaint = effectiveAnnualRent * (maintRate/100);
+            let annualFixedOps = (currentTax * 12) + (currentIns * 12);
+            let annualMortgage = mortgage * 12;
+            
+            let preTaxProfit = effectiveAnnualRent - annualFixedOps - annualMaint - annualMortgage;
+            
+            let taxBill = 0;
+            if (preTaxProfit > 0) {
+                taxBill = preTaxProfit * (taxRate / 100);
+            }
+            
+            let netAnnualProfit = preTaxProfit - taxBill;
+            
+            // Push annual profit (not cumulative)
+            profitData.push(netAnnualProfit);
+
+            // Expenses: We'll assume slight inflation (2%) on expenses for realism, 
+            // or we could keep them flat. Let's apply 2% inflation to expenses only.
+            currentTax *= 1.02; 
+            currentIns *= 1.02;
+        }
+
+        lineChart = new Chart(ctx, {
+            type: 'bar', // Changed to BAR for Annual View
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Annual Net Profit',
+                    data: profitData,
+                    backgroundColor: '#10b981', 
+                    borderRadius: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { 
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let val = context.raw;
+                                return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(val);
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: { 
+                        beginAtZero: true,
+                        ticks: { callback: (val) => '$' + val/1000 + 'k' },
+                        grid: { borderDash: [5, 5] }
+                    },
+                    x: { grid: { display: false }, ticks: { maxTicksLimit: 10 } }
+                }
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
