@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rental Roi Calculator v1</title>
+    <title>Rental Analyzer v13</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -130,10 +130,10 @@
     <div class="input-column">
         
         <div class="card">
-            <h2><i class="fas fa-home"></i> Aseti</h2>
+            <h2><i class="fas fa-home"></i> Acquisition</h2>
             <div class="input-grid">
                 <div class="input-wrapper">
-                    <label>Çmimi i Shtepisë</label>
+                    <label>Purchase Price</label>
                     <div class="input-icon-group">
                         <i class="fas fa-dollar-sign"></i>
                         <input type="number" id="price" value="100000">
@@ -142,21 +142,21 @@
                 </div>
 
             <div class="toggle-box" style="margin-top: 15px;">
-                <span class="toggle-label"><i class="fas fa-money-bill-wave"></i> E blet me cash (Pa Kredi)?</span>
+                <span class="toggle-label"><i class="fas fa-money-bill-wave"></i> Bought with Cash?</span>
                 <input type="checkbox" id="cashPurchase" onchange="toggleMortgageInputs()">
             </div>
 
             <div id="mortgageSection">
                 <div class="input-grid">
                     <div class="input-wrapper">
-                        <label>Parapagim (%)</label>
+                        <label>Down Payment (%)</label>
                         <div class="input-icon-group">
                             <i class="fas fa-percentage"></i>
                             <input type="number" id="downPaymentPercent" value="20">
                         </div>
                     </div>
                     <div class="input-wrapper">
-                        <label>Norma e Interesit (%)</label>
+                        <label>Interest Rate (%)</label>
                         <div class="input-icon-group">
                             <i class="fas fa-percentage"></i>
                             <input type="number" id="interestRate" value="6.5" step="0.1">
@@ -164,7 +164,7 @@
                     </div>
                 </div>
                 <div class="input-wrapper" style="margin-top: 15px;">
-                    <label>Percakto Kohen e Kredis (Vite)</label>
+                    <label>Loan Term (Years)</label>
                     <div class="input-icon-group">
                         <i class="fas fa-calendar"></i>
                         <input type="number" id="loanTerm" value="30">
@@ -174,44 +174,49 @@
         </div>
 
         <div class="card">
-            <h2><i class="fas fa-wallet"></i> Fitimet Pasive dhe Shpo
-enzimet</h2>
+            <h2><i class="fas fa-wallet"></i> Operations</h2>
             <div class="input-grid">
                 <div class="input-wrapper">
-                    <label>Qeraja Mujore</label>
+                    <label>Monthly Rent</label>
                     <div class="input-icon-group">
                         <i class="fas fa-dollar-sign"></i>
                         <input type="number" id="rent" value="1200">
                     </div>
                 </div>
+                <div class="input-wrapper">
+                    <label>Vacancy Rate (%)</label>
+                    <div class="input-icon-group">
+                        <i class="fas fa-door-open"></i>
+                        <input type="number" id="vacancyRate" value="5">
+                    </div>
                 </div>
             </div>
 
-            <h3>Shpenzimet Vjetore</h3>
+            <h3>Annual Expenses</h3>
             <div class="input-grid">
                 <div class="input-wrapper">
-                    <label>Taksa e Prones ($)</label>
+                    <label>Property Tax ($)</label>
                     <div class="input-icon-group">
                         <i class="fas fa-file-invoice-dollar"></i>
                         <input type="number" id="annualTax" value="1500">
                     </div>
                 </div>
                 <div class="input-wrapper">
-                    <label>Sigurimi i Prones ($)</label>
+                    <label>Insurance ($)</label>
                     <div class="input-icon-group">
                         <i class="fas fa-shield-alt"></i>
                         <input type="number" id="annualInsurance" value="800">
                     </div>
                 </div>
                 <div class="input-wrapper">
-                    <label>Rregullimet (%)</label>
+                    <label>Maintenance (%)</label>
                     <div class="input-icon-group">
                         <i class="fas fa-tools"></i>
                         <input type="number" id="maintenanceRate" value="5">
                     </div>
                 </div>
                  <div class="input-wrapper">
-                    <label>Tatim Fitimi i Qeras(%)</label>
+                    <label>Income Tax Rate (%)</label>
                     <div class="input-icon-group">
                         <i class="fas fa-user-tie"></i>
                         <input type="number" id="incomeTaxRate" value="0">
@@ -221,10 +226,10 @@ enzimet</h2>
         </div>
 
         <div class="card">
-            <h2><i class="fas fa-chart-line"></i>Rritja e Qeras</h2>
+            <h2><i class="fas fa-chart-line"></i> Rent Growth</h2>
             <div class="input-grid">
                 <div class="input-wrapper">
-                    <label>Rritja Vjetore e Qeras (%)</label>
+                    <label>Annual Rent Increase (%)</label>
                     <div class="input-icon-group">
                         <i class="fas fa-arrow-up"></i>
                         <input type="number" id="rentIncrease" value="3" step="0.1">
@@ -234,7 +239,7 @@ enzimet</h2>
                     *Calculated as Simple Interest (No Compounding)
                 </div>
             </div>
-            <button class="calc-btn" onclick="calculate()">Llogarit R.O.I e Qeras Tuaj</button>
+            <button class="calc-btn" onclick="calculate()">Recalculate Analysis</button>
         </div>
 
     </div>
@@ -248,7 +253,7 @@ enzimet</h2>
 
             <div class="wealth-box">
                 <div class="big-number" id="annualProfitNet">$0</div>
-                <div class="big-label">Fitimj Vjetor Neto</div>
+                <div class="big-label">Annual Profit Net</div>
             </div>
 
             <div class="stat-grid">
@@ -263,11 +268,11 @@ enzimet</h2>
             </div>
 
             <div style="background: #f8fafc; padding: 15px; border-radius: 8px;">
-                <div class="breakdown-row"><span>Borxhi (P&I)</span><strong id="piPayment">$0</strong></div>
-                <div class="breakdown-row"><span>Tatimi & Siguracioni</span><strong id="taxInsPayment">$0</strong></div>
-                <div class="breakdown-row"><span>Rregullimet e Prones</span><strong id="vacMaintPayment">$0</strong></div>
+                <div class="breakdown-row"><span>Mortgage (P&I)</span><strong id="piPayment">$0</strong></div>
+                <div class="breakdown-row"><span>Taxes & Ins</span><strong id="taxInsPayment">$0</strong></div>
+                <div class="breakdown-row"><span>Vacancy & Maint.</span><strong id="vacMaintPayment">$0</strong></div>
                 <div class="breakdown-row"><span>Income Tax</span><strong id="incTaxPayment" style="color:var(--primary);">$0</strong></div>
-                <div class="breakdown-row total"><span>Kostoja Mujore Totale</span><strong id="totalExpenses">$0</strong></div>
+                <div class="breakdown-row total"><span>Total Monthly Cost</span><strong id="totalExpenses">$0</strong></div>
             </div>
             
             <h3 style="margin-top: 20px;">Monthly Costs Breakdown</h3>
@@ -315,6 +320,7 @@ enzimet</h2>
         const annualInsurance = parseFloat(document.getElementById('annualInsurance').value) || 0;
         
         const rawRent = parseFloat(document.getElementById('rent').value) || 0;
+        const vacancyRate = parseFloat(document.getElementById('vacancyRate').value) || 0;
         const maintenanceRate = parseFloat(document.getElementById('maintenanceRate').value) || 0;
         
         const incomeTaxRate = parseFloat(document.getElementById('incomeTaxRate').value) || 0;
@@ -343,6 +349,8 @@ enzimet</h2>
         const totalInitialInvestment = downPayment;
 
         // --- YEAR 1 OPERATIONS (MONTHLY) ---
+        const vacancyCost = rawRent * (vacancyRate / 100);
+        const effectiveRent = rawRent - vacancyCost; 
         
         const maintenanceCost = effectiveRent * (maintenanceRate / 100);
         const taxCost = annualPropTax / 12;
@@ -359,7 +367,7 @@ enzimet</h2>
         }
 
         const netCashFlow = preTaxCashFlow - incomeTaxCost;
-        const totalOutflow = mortgagePayment + operatingExpenses + incomeTaxCost;
+        const totalOutflow = mortgagePayment + operatingExpenses + incomeTaxCost + vacancyCost;
 
         // --- METRICS ---
         const annualCashFlow = netCashFlow * 12;
@@ -382,17 +390,18 @@ enzimet</h2>
 
         document.getElementById('piPayment').innerText = fmt(mortgagePayment);
         document.getElementById('taxInsPayment').innerText = fmt(taxCost + insCost);
-        document.getElementById('vacMaintPayment').innerText = fmt(maintenanceCost);
+        document.getElementById('vacMaintPayment').innerText = fmt(vacancyCost + maintenanceCost);
         document.getElementById('incTaxPayment').innerText = fmt(incomeTaxCost);
         document.getElementById('totalExpenses').innerText = fmt(totalOutflow);
 
-        updateDonut(mortgagePayment, taxCost+insCost, maintenanceCost, incomeTaxCost, netCashFlow);
+        updateDonut(mortgagePayment, taxCost+insCost, vacancyCost+maintenanceCost, incomeTaxCost, netCashFlow);
         
         updateProjection(
             rawRent, 
             mortgagePayment, 
             annualPropTax, 
             annualInsurance, 
+            vacancyRate, 
             maintenanceRate, 
             incomeTaxRate, 
             rentGrowth
@@ -424,7 +433,7 @@ enzimet</h2>
     }
 
     // --- ANNUAL PROFIT GRAPH (NO COMPOUNDING) ---
-    function updateProjection(startRent, mortgage, startTax, startIns, maintRate, taxRate, rentGrowth) {
+    function updateProjection(startRent, mortgage, startTax, startIns, vacRate, maintRate, taxRate, rentGrowth) {
         const ctx = document.getElementById('lineChart').getContext('2d');
         if (lineChart) lineChart.destroy();
 
@@ -448,6 +457,8 @@ enzimet</h2>
             let monthlyRent = startRent + (annualRentIncreaseAmount * (i - 1));
             
             let annualRent = monthlyRent * 12;
+            let vacancyLoss = annualRent * (vacRate/100);
+            let effectiveAnnualRent = annualRent - vacancyLoss;
             
             let annualMaint = effectiveAnnualRent * (maintRate/100);
             let annualFixedOps = (currentTax * 12) + (currentIns * 12);
