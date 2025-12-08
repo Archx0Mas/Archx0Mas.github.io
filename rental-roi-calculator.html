@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Llogarites R.O.I i Qeras</title>
+    <title>LLogarites i Qeras - Llogarit ROI e Qerase</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -64,7 +64,7 @@
         .input-icon-group { position: relative; display: flex; align-items: center; }
         .input-icon-group i { position: absolute; left: 12px; color: #94a3b8; font-size: 0.9em; pointer-events: none; }
 
-        input[type="number"] {
+        input[type="number"], select {
             width: 100%;
             padding: 12px 12px 12px 35px;
             border: 1px solid #cbd5e1;
@@ -73,8 +73,10 @@
             transition: all 0.2s;
             background: #f8fafc;
             font-weight: 500;
+            box-sizing: border-box;
         }
-        input:focus { outline: none; border-color: var(--primary); background: #fff; box-shadow: 0 0 0 4px var(--primary-light); }
+        select { padding-left: 12px; cursor: pointer; }
+        input:focus, select:focus { outline: none; border-color: var(--primary); background: #fff; box-shadow: 0 0 0 4px var(--primary-light); }
 
         .toggle-box {
             display: flex;
@@ -112,7 +114,7 @@
 
         .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
         .stat-box { background: #f1f5f9; padding: 12px; border-radius: 8px; text-align: center; }
-        
+       
         .breakdown-row { display: flex; justify-content: space-between; font-size: 0.9rem; padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: var(--text-muted); }
         .breakdown-row strong { color: var(--text-main); }
         .breakdown-row.total { border-top: 2px solid #e2e8f0; border-bottom: none; padding-top: 12px; margin-top: 5px; color: var(--text-main); font-weight: 700; }
@@ -126,20 +128,34 @@
 <body>
 
 <div class="app-container">
-    
+   
     <div class="input-column">
         
+        <div class="card" style="padding: 15px; display: flex; align-items: center; justify-content: space-between;">
+            <label style="margin:0; font-size: 1rem; color: var(--primary); font-weight: 700; cursor:pointer;" for="currencySelector">
+                <i class="fas fa-globe"></i> Select Currency
+            </label>
+            <div style="width: 200px;">
+                <select id="currencySelector" onchange="calculate()">
+                    <option value="USD">🇺🇸 Dollar ($)</option>
+                    <option value="EUR">🇪🇺 Euro (€)</option>
+                    <option value="GBP">🇬🇧 Pound (£)</option>
+                    <option value="ALL">🇦🇱 Albanian Lek (ALL)</option>
+                </select>
+            </div>
+        </div>
+       
         <div class="card">
             <h2><i class="fas fa-home"></i> Acquisition</h2>
             <div class="input-grid">
                 <div class="input-wrapper">
                     <label>Purchase Price</label>
                     <div class="input-icon-group">
-                        <i class="fas fa-dollar-sign"></i>
+                        <i class="fas fa-tag"></i>
                         <input type="number" id="price" value="100000">
                     </div>
                 </div>
-                </div>
+            </div>
 
             <div class="toggle-box" style="margin-top: 15px;">
                 <span class="toggle-label"><i class="fas fa-money-bill-wave"></i> Bought with Cash?</span>
@@ -179,15 +195,8 @@
                 <div class="input-wrapper">
                     <label>Monthly Rent</label>
                     <div class="input-icon-group">
-                        <i class="fas fa-dollar-sign"></i>
+                        <i class="fas fa-hand-holding-dollar"></i>
                         <input type="number" id="rent" value="1200">
-                    </div>
-                </div>
-                <div class="input-wrapper">
-                    <label>Vacancy Rate (%)</label>
-                    <div class="input-icon-group">
-                        <i class="fas fa-door-open"></i>
-                        <input type="number" id="vacancyRate" value="5">
                     </div>
                 </div>
             </div>
@@ -195,14 +204,14 @@
             <h3>Annual Expenses</h3>
             <div class="input-grid">
                 <div class="input-wrapper">
-                    <label>Property Tax ($)</label>
+                    <label>Property Tax</label>
                     <div class="input-icon-group">
-                        <i class="fas fa-file-invoice-dollar"></i>
+                        <i class="fas fa-file-invoice"></i>
                         <input type="number" id="annualTax" value="1500">
                     </div>
                 </div>
                 <div class="input-wrapper">
-                    <label>Insurance ($)</label>
+                    <label>Insurance</label>
                     <div class="input-icon-group">
                         <i class="fas fa-shield-alt"></i>
                         <input type="number" id="annualInsurance" value="800">
@@ -274,7 +283,7 @@
                 <div class="breakdown-row"><span>Income Tax</span><strong id="incTaxPayment" style="color:var(--primary);">$0</strong></div>
                 <div class="breakdown-row total"><span>Total Monthly Cost</span><strong id="totalExpenses">$0</strong></div>
             </div>
-            
+           
             <h3 style="margin-top: 20px;">Monthly Costs Breakdown</h3>
             <div class="chart-wrapper" style="height: 150px;">
                 <canvas id="donutChart"></canvas>
@@ -294,7 +303,7 @@
     let lineChart = null;
 
     window.onload = function() {
-        document.getElementById('cashPurchase').checked = true;
+        document.getElementById('cashPurchase').checked = false;
         toggleMortgageInputs();
         calculate();
     }
@@ -311,18 +320,21 @@
     }
 
     function calculate() {
+        // --- CURRENCY ---
+        const currencyCode = document.getElementById('currencySelector').value;
+        const fmt = (n) => n.toLocaleString('en-US', { style: 'currency', currency: currencyCode, maximumFractionDigits: 0 });
+
         // --- INPUTS ---
         const price = parseFloat(document.getElementById('price').value) || 0;
-        // REMOVED CLOSING COSTS VAR
         const isCash = document.getElementById('cashPurchase').checked;
-        
+       
         const annualPropTax = parseFloat(document.getElementById('annualTax').value) || 0;
         const annualInsurance = parseFloat(document.getElementById('annualInsurance').value) || 0;
-        
+       
         const rawRent = parseFloat(document.getElementById('rent').value) || 0;
-        const vacancyRate = parseFloat(document.getElementById('vacancyRate').value) || 0;
+        const vacancyRate = 0; 
+
         const maintenanceRate = parseFloat(document.getElementById('maintenanceRate').value) || 0;
-        
         const incomeTaxRate = parseFloat(document.getElementById('incomeTaxRate').value) || 0;
         const rentGrowth = parseFloat(document.getElementById('rentIncrease').value) || 0;
 
@@ -334,10 +346,10 @@
             const downPercent = parseFloat(document.getElementById('downPaymentPercent').value) || 0;
             downPayment = price * (downPercent / 100);
             const loanAmount = price - downPayment;
-            
+           
             const rate = parseFloat(document.getElementById('interestRate').value) || 0;
             const years = parseFloat(document.getElementById('loanTerm').value) || 0;
-            
+           
             if (rate > 0 && years > 0) {
                 const monthlyRate = (rate / 100) / 12;
                 const numberOfPayments = years * 12;
@@ -345,13 +357,12 @@
             }
         }
 
-        // Removed closing costs from total investment
         const totalInitialInvestment = downPayment;
 
         // --- YEAR 1 OPERATIONS (MONTHLY) ---
         const vacancyCost = rawRent * (vacancyRate / 100);
         const effectiveRent = rawRent - vacancyCost; 
-        
+       
         const maintenanceCost = effectiveRent * (maintenanceRate / 100);
         const taxCost = annualPropTax / 12;
         const insCost = annualInsurance / 12;
@@ -376,15 +387,11 @@
         const cocRoi = totalInitialInvestment > 0 ? (annualCashFlow / totalInitialInvestment) * 100 : 0;
 
         // --- UI UPDATES ---
-        const fmt = (n) => n.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
-        
         const cfEl = document.getElementById('monthlyCashFlow');
         cfEl.innerText = fmt(netCashFlow);
         cfEl.style.color = netCashFlow >= 0 ? 'var(--accent)' : 'var(--danger)';
 
-        // UPDATED: Green box now shows Annual Profit Net (Year 1)
         document.getElementById('annualProfitNet').innerText = fmt(annualCashFlow);
-
         document.getElementById('cocRoi').innerText = cocRoi.toFixed(2) + '%';
         document.getElementById('capRate').innerText = capRate.toFixed(2) + '%';
 
@@ -395,7 +402,7 @@
         document.getElementById('totalExpenses').innerText = fmt(totalOutflow);
 
         updateDonut(mortgagePayment, taxCost+insCost, vacancyCost+maintenanceCost, incomeTaxCost, netCashFlow);
-        
+       
         updateProjection(
             rawRent, 
             mortgagePayment, 
@@ -404,7 +411,8 @@
             vacancyRate, 
             maintenanceRate, 
             incomeTaxRate, 
-            rentGrowth
+            rentGrowth,
+            currencyCode
         );
     }
 
@@ -432,58 +440,43 @@
         });
     }
 
-    // --- ANNUAL PROFIT GRAPH (NO COMPOUNDING) ---
-    function updateProjection(startRent, mortgage, startTax, startIns, vacRate, maintRate, taxRate, rentGrowth) {
+    // --- ANNUAL PROFIT GRAPH ---
+    function updateProjection(startRent, mortgage, startTax, startIns, vacRate, maintRate, taxRate, rentGrowth, currencyCode) {
         const ctx = document.getElementById('lineChart').getContext('2d');
         if (lineChart) lineChart.destroy();
 
         const labels = [];
         const profitData = [];
-        
-        // Base starting values
+       
         let currentTax = startTax / 12;
         let currentIns = startIns / 12;
-        
-        // Rent Increase Amount (Simple Interest Logic)
-        // If rent is 1000 and growth is 10%, we add 100 every year flat.
         const annualRentIncreaseAmount = startRent * (rentGrowth / 100);
 
         for (let i = 1; i <= 30; i++) {
             labels.push(`Y${i}`);
-            
-            // Simple Linear Rent Growth: StartRent + (YearIndex * IncreaseAmount)
-            // Year 1: StartRent
-            // Year 2: StartRent + IncreaseAmount
+           
             let monthlyRent = startRent + (annualRentIncreaseAmount * (i - 1));
-            
             let annualRent = monthlyRent * 12;
             let vacancyLoss = annualRent * (vacRate/100);
             let effectiveAnnualRent = annualRent - vacancyLoss;
-            
             let annualMaint = effectiveAnnualRent * (maintRate/100);
             let annualFixedOps = (currentTax * 12) + (currentIns * 12);
             let annualMortgage = mortgage * 12;
-            
+           
             let preTaxProfit = effectiveAnnualRent - annualFixedOps - annualMaint - annualMortgage;
-            
             let taxBill = 0;
             if (preTaxProfit > 0) {
                 taxBill = preTaxProfit * (taxRate / 100);
             }
-            
             let netAnnualProfit = preTaxProfit - taxBill;
-            
-            // Push annual profit (not cumulative)
+           
             profitData.push(netAnnualProfit);
-
-            // Expenses: We'll assume slight inflation (2%) on expenses for realism, 
-            // or we could keep them flat. Let's apply 2% inflation to expenses only.
-            currentTax *= 1.02; 
-            currentIns *= 1.02;
+            currentTax *= 1.00; 
+            currentIns *= 1.00;
         }
 
         lineChart = new Chart(ctx, {
-            type: 'bar', // Changed to BAR for Annual View
+            type: 'bar', 
             data: {
                 labels: labels,
                 datasets: [{
@@ -502,7 +495,7 @@
                         callbacks: {
                             label: function(context) {
                                 let val = context.raw;
-                                return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(val);
+                                return new Intl.NumberFormat('en-US', { style: 'currency', currency: currencyCode, maximumFractionDigits: 0 }).format(val);
                             }
                         }
                     }
@@ -510,7 +503,13 @@
                 scales: {
                     y: { 
                         beginAtZero: true,
-                        ticks: { callback: (val) => '$' + val/1000 + 'k' },
+                        ticks: { 
+                            callback: (val) => {
+                                // Short format for axis (e.g. $5k, €5k)
+                                const symbol = (0).toLocaleString('en-US', { style: 'currency', currency: currencyCode }).replace(/0.00|0/g, '').trim();
+                                return symbol + (val/1000) + 'k';
+                            } 
+                        },
                         grid: { borderDash: [5, 5] }
                     },
                     x: { grid: { display: false }, ticks: { maxTicksLimit: 10 } }
