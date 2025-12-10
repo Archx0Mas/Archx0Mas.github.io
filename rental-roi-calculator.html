@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LLogarites i Qeras - Llogarit ROIn e Qerase</title>
+    <title>LLogaritesi i Qeras - Llogarit ROI-n e Qerase</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -41,6 +41,49 @@
             .app-container { grid-template-columns: 1fr; }
         }
 
+        /* TITLE STYLES */
+        .main-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 10px 0;
+        }
+        .main-header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin: 0;
+            background: linear-gradient(135deg, var(--primary) 0%, #2563eb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+        .main-header p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin: 8px 0 0 0;
+        }
+
+        /* --- NEW DISCLAIMER BOX STYLES --- */
+        .disclaimer-box {
+            background-color: #fffbeb; /* Light amber background */
+            border: 1px solid #fcd34d; /* Amber border */
+            color: #92400e; /* Dark amber text */
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .disclaimer-box svg {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            color: #f59e0b; /* Amber icon color */
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
         .card {
             background: var(--surface);
             padding: 25px;
@@ -59,7 +102,18 @@
         /* INPUTS */
         .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .input-wrapper { margin-bottom: 5px; }
-        label { display: block; font-size: 0.85em; font-weight: 600; margin-bottom: 6px; color: var(--text-muted); }
+        
+        label { 
+            display: flex; 
+            justify-content: flex-start; 
+            align-items: center;
+            gap: 8px; 
+            font-size: 0.85em; 
+            font-weight: 600; 
+            margin-bottom: 6px; 
+            color: var(--text-muted); 
+            position: relative; 
+        }
 
         .input-icon-group { position: relative; display: flex; align-items: center; }
         .input-icon-group i { position: absolute; left: 12px; color: #94a3b8; font-size: 0.9em; pointer-events: none; }
@@ -91,15 +145,27 @@
         .toggle-label { font-weight: 600; color: var(--primary); margin: 0; font-size: 0.95rem;}
         input[type="checkbox"] { accent-color: var(--primary); transform: scale(1.2); cursor: pointer; }
 
-        #mortgageSection { transition: all 0.4s; overflow: hidden; max-height: 500px; opacity: 1; }
-        #mortgageSection.hidden { max-height: 0; opacity: 0; margin: 0; }
+        #mortgageSection { 
+            transition: all 0.4s ease-in-out; 
+            max-height: 500px; 
+            opacity: 1; 
+            overflow: hidden; 
+        }
+        #mortgageSection.hidden { 
+            max-height: 0; 
+            opacity: 0; 
+            margin: 0; 
+            overflow: hidden !important; 
+        }
+        #mortgageSection.visible-overflow {
+            overflow: visible;
+        }
 
         /* RESULTS */
         .results-header { text-align: center; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px dashed #e2e8f0; }
         .big-number { font-size: 2.5rem; font-weight: 800; color: var(--text-main); letter-spacing: -1px; line-height: 1; }
         .big-label { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; margin-top: 5px; }
 
-        /* Annual Profit Box (Green) */
         .wealth-box {
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             color: white;
@@ -123,17 +189,94 @@
         .calc-btn:active { transform: scale(0.98); }
 
         .chart-wrapper { height: 200px; width: 100%; position: relative; margin-top: 15px; }
+
+        /* TOOLTIP STYLES */
+        .tooltip {
+            position: relative;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            color: var(--primary);
+            width: 20px; 
+            height: 20px;
+            z-index: 10;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: #334155;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 9999;
+            bottom: 135%; 
+            left: 50%;
+            margin-left: -100px; 
+            opacity: 0;
+            transition: opacity 0.2s;
+            font-size: 0.75rem;
+            line-height: 1.4;
+            font-weight: 400;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+            pointer-events: none;
+        }
+
+        .tooltip .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #334155 transparent transparent transparent;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        .tooltip.active .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        @media (max-width: 600px) {
+            .tooltip .tooltip-text {
+                width: 180px;
+                margin-left: -90px;
+            }
+        }
     </style>
 </head>
 <body>
+
 
 <div class="app-container">
    
     <div class="input-column">
         
+        <div class="main-header">
+            <h1>LLogaritesi i te Ardhurave te Qeras</h1>
+            <p>Llogaritni fitimin mujor nga investimi i qeras, fitimin vjetor neto te qeras dhe projektimin e rritjes se qeras per 30 vjet. Vereni: R.O.I do te thote kthimi nga investimi (Return On Investment).</p>
+        </div>
+
+        <div class="disclaimer-box">
+            <svg fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+            </svg>
+            <div>
+                <strong>Kujdes:</strong> Rezultatet e këtij kalkulatori janë vetëm për orientim. Kostot aktuale, normat e interesit dhe kushtet mund të ndryshojnë nga banka në bankë nese merni nje prone me kredi. Kontaktoni institucionin tuaj financiar për oferta të sakta dhe të personalizuara.
+            </div>
+        </div>
+
         <div class="card" style="padding: 15px; display: flex; align-items: center; justify-content: space-between;">
-            <label style="margin:0; font-size: 1rem; color: var(--primary); font-weight: 700; cursor:pointer;" for="currencySelector">
-                <i class="fas fa-globe"></i> Zgjidh Monedhen
+            <label style="margin:0; font-size: 1rem; color: var(--primary); font-weight: 700; cursor:pointer; width: auto;" for="currencySelector">
+                <span><i class="fas fa-globe"></i> Zgjidh Monedhen </span>
             </label>
             <div style="width: 200px;">
                 <select id="currencySelector" onchange="calculate()">
@@ -149,7 +292,13 @@
             <h2><i class="fas fa-home"></i> Prona </h2>
             <div class="input-grid">
                 <div class="input-wrapper">
-                    <label>Vendos Cmimin e Prones</label>
+                    <label>
+                         Vlera e Prones
+                        <div class="tooltip" onclick="toggleTooltip(this, event)">
+                            <i class="fas fa-question-circle"></i>
+                            <span class="tooltip-text">Vendos shumen totale te vleres se prones.</span>
+                        </div>
+                    </label>
                     <div class="input-icon-group">
                         <i class="fas fa-tag"></i>
                         <input type="number" id="price" value="0">
@@ -158,21 +307,33 @@
             </div>
 
             <div class="toggle-box" style="margin-top: 15px;">
-                <span class="toggle-label"><i class="fas fa-money-bill-wave"></i> E Blet te Gjith Pronen ne cash? </span>
+                <span class="toggle-label"><i class="fas fa-money-bill-wave"></i> E Blet te Gjith Pronen ne cash? Nese po, selekto kutin!</span>
                 <input type="checkbox" id="cashPurchase" onchange="toggleMortgageInputs()">
             </div>
 
             <div id="mortgageSection">
                 <div class="input-grid">
                     <div class="input-wrapper">
-                        <label>Parapagim (%)</label>
+                        <label>
+                            Parapagim (%)
+                            <div class="tooltip" onclick="toggleTooltip(this, event)">
+                                <i class="fas fa-question-circle"></i>
+                                <span class="tooltip-text">Vendos shumen ne perqindje që do të paguani nga xhepi juaj (jo kredi). Bankat zakonisht kërkojnë 15-20% paradhënie për hipotekë. Më shumë paradhënie = normë më e mirë.</span>
+                            </div>
+                        </label>
                         <div class="input-icon-group">
                             <i class="fas fa-percentage"></i>
-                            <input type="number" id="downPaymentPercent" value="20">
+                            <input type="number" id="downPaymentPercent" value="0">
                         </div>
                     </div>
                     <div class="input-wrapper">
-                        <label>Norma e Interesit (%)</label>
+                        <label>
+                            Norma e Interesit Vjetor (%)
+                            <div class="tooltip" onclick="toggleTooltip(this, event)">
+                                <i class="fas fa-question-circle"></i>
+                                <span class="tooltip-text">Vendos normen NOMINALE vjetore te interesit që banka ofron (p.sh. 8.5%). Kjo është vetëm interesi - NEI (norma efektive) do të jetë më e lartë sepse përfshin tarifat. Në Shqipëri: ALL 7-10%, EUR 4-7%.</span>
+                            </div>
+                        </label>
                         <div class="input-icon-group">
                             <i class="fas fa-percentage"></i>
                             <input type="number" id="interestRate" value="0" step="0.1">
@@ -180,7 +341,13 @@
                     </div>
                 </div>
                 <div class="input-wrapper" style="margin-top: 15px;">
-                    <label>Percakto Kohen e Kredis (Vite)</label>
+                    <label>
+                        Përcakto Kohën e Kredis (Vite)
+                        <div class="tooltip" onclick="toggleTooltip(this, event)">
+                            <i class="fas fa-question-circle"></i>
+                            <span class="tooltip-text">Vendos afatin në vite te kredis (p.sh. 20).</span>
+                        </div>
+                    </label>
                     <div class="input-icon-group">
                         <i class="fas fa-calendar"></i>
                         <input type="number" id="loanTerm" value="0">
@@ -190,10 +357,16 @@
         </div>
 
         <div class="card">
-            <h2><i class="fas fa-wallet"></i> Qeraja & Shpenzimet</h2>
+            <h2><i class="fas fa-wallet"></i> Te Ardhurat & Shpenzimet </h2>
             <div class="input-grid">
                 <div class="input-wrapper">
-                    <label>Qeraja Mujore</label>
+                    <label>
+                        Te Ardhurat e Qeras
+                        <div class="tooltip" onclick="toggleTooltip(this, event)">
+                            <i class="fas fa-question-circle"></i>
+                            <span class="tooltip-text">Vendos shumen mujore te paras qe merni nga dhenia me qera e prones.</span>
+                        </div>
+                    </label>
                     <div class="input-icon-group">
                         <i class="fas fa-hand-holding-dollar"></i>
                         <input type="number" id="rent" value="0">
@@ -204,28 +377,52 @@
             <h3>Shpenzimet Vjetore</h3>
             <div class="input-grid">
                 <div class="input-wrapper">
-                    <label>Taksa e Prones</label>
+                    <label>
+                        Taksa e Prones
+                        <div class="tooltip" onclick="toggleTooltip(this, event)">
+                            <i class="fas fa-question-circle"></i>
+                            <span class="tooltip-text">Vendos sa taksa i paguan shtetit ne vit per pronen. 0.1% - 0.2% e vleres se prones eshte vendosur taksa e prones per 2026. </span>
+                        </div>
+                    </label>
                     <div class="input-icon-group">
                         <i class="fas fa-file-invoice"></i>
                         <input type="number" id="annualTax" value="0">
                     </div>
                 </div>
                 <div class="input-wrapper">
-                    <label>Sigurimi i Prones</label>
+                    <label>
+                        Sigurimi i Prones
+                        <div class="tooltip" onclick="toggleTooltip(this, event)">
+                            <i class="fas fa-question-circle"></i>
+                            <span class="tooltip-text">Vendos koston totale vjetore te siguracionit te prones. Pagesa varet nga zona ku ndodhet prona dhe nga madhesia e prones.</span>
+                        </div>
+                    </label>
                     <div class="input-icon-group">
                         <i class="fas fa-shield-alt"></i>
                         <input type="number" id="annualInsurance" value="0">
                     </div>
                 </div>
                 <div class="input-wrapper">
-                    <label>Rregullimet (%)</label>
+                    <label>
+                        Rregullimet (%)
+                        <div class="tooltip" onclick="toggleTooltip(this, event)">
+                            <i class="fas fa-question-circle"></i>
+                            <span class="tooltip-text">Vendos sa % e paras qe fiton nga qeraja te shkon per rregullime te prones.</span>
+                        </div>
+                    </label>
                     <div class="input-icon-group">
                         <i class="fas fa-tools"></i>
                         <input type="number" id="maintenanceRate" value="0">
                     </div>
                 </div>
                  <div class="input-wrapper">
-                    <label>Tatim Fitimi (%)</label>
+                    <label>
+                        Tatim Fitimi (%)
+                        <div class="tooltip" onclick="toggleTooltip(this, event)">
+                            <i class="fas fa-question-circle"></i>
+                            <span class="tooltip-text">Vendos sa perqind te taton shteti per te ardhurat nga qeraja. Ne Shqiperi eshte 15%.</span>
+                        </div>
+                    </label>
                     <div class="input-icon-group">
                         <i class="fas fa-user-tie"></i>
                         <input type="number" id="incomeTaxRate" value="0">
@@ -235,20 +432,26 @@
         </div>
 
         <div class="card">
-            <h2><i class="fas fa-chart-line"></i> Rritja e Qerase</h2>
+            <h2><i class="fas fa-chart-line"></i> Rritja e Qerase </h2>
             <div class="input-grid">
                 <div class="input-wrapper">
-                    <label>Norma Vjetore e Rritjes se Qerase (%)</label>
+                    <label>
+                        Norma Vjetore e Rritjes se Qerase (%)
+                        <div class="tooltip" onclick="toggleTooltip(this, event)">
+                            <i class="fas fa-question-circle"></i>
+                            <span class="tooltip-text">Vendos sa perqind ne vit mund te rritet qeraja juaj. Norma Baze e rritjes esht 3%.</span>
+                        </div>
+                    </label>
                     <div class="input-icon-group">
                         <i class="fas fa-arrow-up"></i>
                         <input type="number" id="rentIncrease" value="0" step="0.1">
                     </div>
                 </div>
                 <div style="font-size: 0.8em; color: #64748b; align-self: center;">
-                    *LLogaritur si nje Interes i Thjesht (Jo Compounding)
+                    *LLogaritur si Interes i Thjesht (Jo Compounding)
                 </div>
             </div>
-            <button class="calc-btn" onclick="calculate()">LLogarit R.O.I e Qeras</button>
+            <button class="calc-btn" onclick="calculate()">LLogarit R.O.I e Qerase</button>
         </div>
 
     </div>
@@ -257,7 +460,7 @@
         <div class="card">
             <div class="results-header">
                 <span class="big-number" id="monthlyCashFlow">$0</span>
-                <div class="big-label">Projektimi i Cashflow-t Mujor</div>
+                <div class="big-label">Te Ardhurat Mujore Nga Qeraja</div>
             </div>
 
             <div class="wealth-box">
@@ -277,14 +480,14 @@
             </div>
 
             <div style="background: #f8fafc; padding: 15px; border-radius: 8px;">
-                <div class="breakdown-row"><span>Kredia e Prones (P&I)</span><strong id="piPayment">$0</strong></div>
-                <div class="breakdown-row"><span>Taksa e Prones & Sigurimi</span><strong id="taxInsPayment">$0</strong></div>
-                <div class="breakdown-row"><span>Rregullimet</span><strong id="vacMaintPayment">$0</strong></div>
-                <div class="breakdown-row"><span>Tatim Fitimi</span><strong id="incTaxPayment" style="color:var(--primary);">$0</strong></div>
-                <div class="breakdown-row total"><span>Kosto Mujore Totale</span><strong id="totalExpenses">$0</strong></div>
+                <div class="breakdown-row"><span>Pagesa Mujore e Kredise</span><strong id="piPayment">$0</strong></div>
+                <div class="breakdown-row"><span>Pagesa e Takses se Prones & Siguracioni</span><strong id="taxInsPayment">$0</strong></div>
+                <div class="breakdown-row"><span>RRegullimet e Prones</span><strong id="vacMaintPayment">$0</strong></div>
+                <div class="breakdown-row"><span>Pagesa e Tatim Fitimit</span><strong id="incTaxPayment" style="color:var(--primary);">$0</strong></div>
+                <div class="breakdown-row total"><span>Kostoja Mujore ne Total</span><strong id="totalExpenses">$0</strong></div>
             </div>
            
-            <h3 style="margin-top: 20px;">Grafiku i Fitimit & Shpenzimeve</h3>
+            <h3 style="margin-top: 20px;">Grafiku i Te Ardhurave & Shpenzimeve</h3>
             <div class="chart-wrapper" style="height: 150px;">
                 <canvas id="donutChart"></canvas>
             </div>
@@ -301,20 +504,50 @@
 <script>
     let donutChart = null; 
     let lineChart = null;
+    let animationTimeout = null;
 
     window.onload = function() {
         document.getElementById('cashPurchase').checked = false;
         toggleMortgageInputs();
         calculate();
+        setupTooltipListeners();
     }
 
+    // --- TOOLTIP LOGIC ---
+    function toggleTooltip(element, event) {
+        event.preventDefault(); 
+        event.stopPropagation();
+        
+        const allTooltips = document.querySelectorAll('.tooltip');
+        allTooltips.forEach(t => {
+            if (t !== element) t.classList.remove('active');
+        });
+
+        element.classList.toggle('active');
+    }
+
+    function setupTooltipListeners() {
+        document.addEventListener('click', function(e) {
+            const allTooltips = document.querySelectorAll('.tooltip');
+            allTooltips.forEach(t => t.classList.remove('active'));
+        });
+    }
+
+    // --- SECTION ANIMATION LOGIC ---
     function toggleMortgageInputs() {
         const isCash = document.getElementById('cashPurchase').checked;
         const section = document.getElementById('mortgageSection');
+        
+        if (animationTimeout) clearTimeout(animationTimeout);
+
         if (isCash) {
+            section.classList.remove('visible-overflow'); 
             section.classList.add('hidden');
         } else {
             section.classList.remove('hidden');
+            animationTimeout = setTimeout(() => {
+                section.classList.add('visible-overflow');
+            }, 400); 
         }
         calculate();
     }
@@ -425,7 +658,7 @@
         donutChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Kredia', 'Taks/Sig', 'Rregullim', 'Tatimi', 'Fitimi'],
+                labels: ['Mortgage', 'Tax/Ins', 'Maint/Vac', 'Inc Tax', 'Profit'],
                 datasets: [{
                     data: [mortgage, fixedOps, variableOps, tax, safeProfit],
                     backgroundColor: ['#4338ca', '#f59e0b', '#64748b', '#a855f7', '#10b981'],
@@ -505,7 +738,6 @@
                         beginAtZero: true,
                         ticks: { 
                             callback: (val) => {
-                                // Short format for axis (e.g. $5k, €5k)
                                 const symbol = (0).toLocaleString('en-US', { style: 'currency', currency: currencyCode }).replace(/0.00|0/g, '').trim();
                                 return symbol + (val/1000) + 'k';
                             } 
