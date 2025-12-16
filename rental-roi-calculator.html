@@ -62,11 +62,11 @@
             margin: 8px 0 0 0;
         }
 
-        /* --- NEW DISCLAIMER BOX STYLES --- */
+        /* DISCLAIMER BOX STYLES */
         .disclaimer-box {
-            background-color: #fffbeb; /* Light amber background */
-            border: 1px solid #fcd34d; /* Amber border */
-            color: #92400e; /* Dark amber text */
+            background-color: #fffbeb;
+            border: 1px solid #fcd34d;
+            color: #92400e;
             padding: 15px;
             border-radius: 8px;
             margin-bottom: 20px;
@@ -79,7 +79,7 @@
             width: 24px;
             height: 24px;
             margin-right: 12px;
-            color: #f59e0b; /* Amber icon color */
+            color: #f59e0b;
             flex-shrink: 0;
             margin-top: 2px;
         }
@@ -116,11 +116,12 @@
         }
 
         .input-icon-group { position: relative; display: flex; align-items: center; }
-        .input-icon-group i { position: absolute; left: 12px; color: #94a3b8; font-size: 0.9em; pointer-events: none; }
+        .input-icon-group i { position: absolute; left: 12px; color: #94a3b8; font-size: 0.9em; pointer-events: none; z-index: 2; }
 
+        /* INPUT & SELECT STYLING - Fixed padding for Select */
         input[type="number"], select {
             width: 100%;
-            padding: 12px 12px 12px 35px;
+            padding: 12px 12px 12px 40px; /* Increased padding-left to clear the icon */
             border: 1px solid #cbd5e1;
             border-radius: 8px;
             font-size: 0.95rem;
@@ -128,8 +129,20 @@
             background: #f8fafc;
             font-weight: 500;
             box-sizing: border-box;
+            appearance: none; /* Removes default browser arrow */
+            -webkit-appearance: none;
         }
-        select { padding-left: 12px; cursor: pointer; }
+        
+        /* Custom arrow for select */
+        select {
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+            padding-right: 40px; /* Space for the arrow */
+            cursor: pointer;
+        }
+
         input:focus, select:focus { outline: none; border-color: var(--primary); background: #fff; box-shadow: 0 0 0 4px var(--primary-light); }
 
         .toggle-box {
@@ -188,7 +201,7 @@
         .calc-btn { width: 100%; background: var(--text-main); color: white; border: none; padding: 16px; border-radius: 10px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: transform 0.1s; }
         .calc-btn:active { transform: scale(0.98); }
 
-        .chart-wrapper { height: 200px; width: 100%; position: relative; margin-top: 15px; }
+        .chart-wrapper { height: 250px; width: 100%; position: relative; margin-top: 15px; }
 
         /* TOOLTIP STYLES */
         .tooltip {
@@ -293,7 +306,7 @@
             <div class="input-grid">
                 <div class="input-wrapper">
                     <label>
-                         Vlera e Prones
+                        Vlera e Prones
                         <div class="tooltip" onclick="toggleTooltip(this, event)">
                             <i class="fas fa-question-circle"></i>
                             <span class="tooltip-text">Vendos shumen totale te vleres se prones.</span>
@@ -304,10 +317,23 @@
                         <input type="number" id="price" value="0">
                     </div>
                 </div>
+                <div class="input-wrapper">
+                    <label>
+                        Kosto e Mbylljes
+                        <div class="tooltip" onclick="toggleTooltip(this, event)">
+                            <i class="fas fa-question-circle"></i>
+                            <span class="tooltip-text">Pagesa Totale e Transaksionit te Prones (Noteri, Taks, Agjenci).</span>
+                        </div>
+                    </label>
+                    <div class="input-icon-group">
+                        <i class="fas fa-file-signature"></i>
+                        <input type="number" id="closingCosts" value="0">
+                    </div>
+                </div>
             </div>
 
             <div class="toggle-box" style="margin-top: 15px;">
-                <span class="toggle-label"><i class="fas fa-money-bill-wave"></i> E Blet te Gjith Pronen ne cash? Nese po, selekto kutin!</span>
+                <span class="toggle-label"><i class="fas fa-money-bill-wave"></i> E Blet te Gjith Pronen ne cash? Nese po, selekto kutin! </span>
                 <input type="checkbox" id="cashPurchase" onchange="toggleMortgageInputs()">
             </div>
 
@@ -315,7 +341,7 @@
                 <div class="input-grid">
                     <div class="input-wrapper">
                         <label>
-                            Parapagim (%)
+                             Parapagim (%)
                             <div class="tooltip" onclick="toggleTooltip(this, event)">
                                 <i class="fas fa-question-circle"></i>
                                 <span class="tooltip-text">Vendos shumen ne perqindje që do të paguani nga xhepi juaj (jo kredi). Bankat zakonisht kërkojnë 15-20% paradhënie për hipotekë. Më shumë paradhënie = normë më e mirë.</span>
@@ -342,7 +368,7 @@
                 </div>
                 <div class="input-wrapper" style="margin-top: 15px;">
                     <label>
-                        Përcakto Kohën e Kredis (Vite)
+                         Përcakto Kohën e Kredis (Vite)
                         <div class="tooltip" onclick="toggleTooltip(this, event)">
                             <i class="fas fa-question-circle"></i>
                             <span class="tooltip-text">Vendos afatin në vite te kredis (p.sh. 20).</span>
@@ -361,7 +387,7 @@
             <div class="input-grid">
                 <div class="input-wrapper">
                     <label>
-                        Te Ardhurat e Qeras
+                        Te Ardhurat Mujore Te Qeras
                         <div class="tooltip" onclick="toggleTooltip(this, event)">
                             <i class="fas fa-question-circle"></i>
                             <span class="tooltip-text">Vendos shumen mujore te paras qe merni nga dhenia me qera e prones.</span>
@@ -378,23 +404,28 @@
             <div class="input-grid">
                 <div class="input-wrapper">
                     <label>
-                        Taksa e Prones
+                         Taksa e Prones
                         <div class="tooltip" onclick="toggleTooltip(this, event)">
                             <i class="fas fa-question-circle"></i>
-                            <span class="tooltip-text">Vendos sa taksa i paguan shtetit ne vit per pronen. 0.1% - 0.2% e vleres se prones eshte vendosur taksa e prones per 2026. </span>
+                            <span class="tooltip-text">Zgjidh tasken e duhur vjetore ne baz te llojit te prones (per resident = taksa 0.05%).</span>
                         </div>
                     </label>
                     <div class="input-icon-group">
                         <i class="fas fa-file-invoice"></i>
-                        <input type="number" id="annualTax" value="0">
+                        <select id="taxType" onchange="calculate()">
+                            <option value="0.05">Resident (0.05%)</option>
+                            <option value="0.15">Industri & Bujqesi (0.15%)</option>
+                            <option value="0.15">Tregtare (0.15%)</option>
+                        </select>
                     </div>
                 </div>
+
                 <div class="input-wrapper">
                     <label>
-                        Sigurimi i Prones
+                         Sigurimi i Prones
                         <div class="tooltip" onclick="toggleTooltip(this, event)">
                             <i class="fas fa-question-circle"></i>
-                            <span class="tooltip-text">Vendos koston totale vjetore te siguracionit te prones. Pagesa varet nga zona ku ndodhet prona dhe nga madhesia e prones.</span>
+                            <span class="tooltip-text">Vendos koston totale vjetore te sigurimit te prones. Pagesa varet nga zona ku ndodhet prona dhe nga madhesia e prones.</span>
                         </div>
                     </label>
                     <div class="input-icon-group">
@@ -404,7 +435,7 @@
                 </div>
                 <div class="input-wrapper">
                     <label>
-                        Rregullimet (%)
+                        Riparimet (%)
                         <div class="tooltip" onclick="toggleTooltip(this, event)">
                             <i class="fas fa-question-circle"></i>
                             <span class="tooltip-text">Vendos sa % e paras qe fiton nga qeraja te shkon per rregullime te prones.</span>
@@ -417,10 +448,10 @@
                 </div>
                  <div class="input-wrapper">
                     <label>
-                        Tatim Fitimi (%)
+                         Tatim Fitimi (%)
                         <div class="tooltip" onclick="toggleTooltip(this, event)">
                             <i class="fas fa-question-circle"></i>
-                            <span class="tooltip-text">Vendos sa perqind te taton shteti per te ardhurat nga qeraja. Ne Shqiperi eshte 15%.</span>
+                            <span class="tooltip-text">Vendos sa % te taton shteti per te ardhurat nga qeraja ne vit. Ne Shqiperi eshte 15%.</span>
                         </div>
                     </label>
                     <div class="input-icon-group">
@@ -432,14 +463,14 @@
         </div>
 
         <div class="card">
-            <h2><i class="fas fa-chart-line"></i> Rritja e Qerase </h2>
+            <h2><i class="fas fa-chart-line"></i>  Rritja e Qerase </h2>
             <div class="input-grid">
                 <div class="input-wrapper">
                     <label>
                         Norma Vjetore e Rritjes se Qerase (%)
                         <div class="tooltip" onclick="toggleTooltip(this, event)">
                             <i class="fas fa-question-circle"></i>
-                            <span class="tooltip-text">Vendos sa perqind ne vit mund te rritet qeraja juaj. Norma Baze e rritjes esht 3%.</span>
+                            <span class="tooltip-text">Vendos sa % ne vit mund te rritet qeraja juaj. Norma Baze e rritjes esht 3%.</span>
                         </div>
                     </label>
                     <div class="input-icon-group">
@@ -447,8 +478,18 @@
                         <input type="number" id="rentIncrease" value="0" step="0.1">
                     </div>
                 </div>
-                <div style="font-size: 0.8em; color: #64748b; align-self: center;">
-                    *LLogaritur si Interes i Thjesht (Jo Compounding)
+                <div class="input-wrapper">
+                    <label>
+                        Norma Vjetore e Rritjes se Vleres se Prones (%)
+                        <div class="tooltip" onclick="toggleTooltip(this, event)">
+                            <i class="fas fa-question-circle"></i>
+                            <span class="tooltip-text">Vendos sa % ne vit mund te rritet vlera e prones tuaj.</span>
+                        </div>
+                    </label>
+                    <div class="input-icon-group">
+                        <i class="fas fa-chart-bar"></i>
+                        <input type="number" id="appreciationRate" value="0" step="0.1">
+                    </div>
                 </div>
             </div>
             <button class="calc-btn" onclick="calculate()">LLogarit R.O.I e Qerase</button>
@@ -460,12 +501,12 @@
         <div class="card">
             <div class="results-header">
                 <span class="big-number" id="monthlyCashFlow">$0</span>
-                <div class="big-label">Te Ardhurat Mujore Nga Qeraja</div>
+                <div class="big-label">Te Ardhurat Mujore Neto</div>
             </div>
 
             <div class="wealth-box">
                 <div class="big-number" id="annualProfitNet">$0</div>
-                <div class="big-label">Fitimi Vjetor Neto</div>
+                <div class="big-label">Te Ardhurat Vjetore Neto</div>
             </div>
 
             <div class="stat-grid">
@@ -480,10 +521,10 @@
             </div>
 
             <div style="background: #f8fafc; padding: 15px; border-radius: 8px;">
-                <div class="breakdown-row"><span>Pagesa Mujore e Kredise</span><strong id="piPayment">$0</strong></div>
-                <div class="breakdown-row"><span>Pagesa e Takses se Prones & Siguracioni</span><strong id="taxInsPayment">$0</strong></div>
-                <div class="breakdown-row"><span>RRegullimet e Prones</span><strong id="vacMaintPayment">$0</strong></div>
-                <div class="breakdown-row"><span>Pagesa e Tatim Fitimit</span><strong id="incTaxPayment" style="color:var(--primary);">$0</strong></div>
+                <div class="breakdown-row"><span>Kostoja Mujore e Kredise</span><strong id="piPayment">$0</strong></div>
+                <div class="breakdown-row"><span>Kostoja e Takses se Prones & Sigurimit</span><strong id="taxInsPayment">$0</strong></div>
+                <div class="breakdown-row"><span>Kostoja e Riparimeve te Prones</span><strong id="vacMaintPayment">$0</strong></div>
+                <div class="breakdown-row"><span>Tatim Fitimi</span><strong id="incTaxPayment" style="color:var(--primary);">$0</strong></div>
                 <div class="breakdown-row total"><span>Kostoja Mujore ne Total</span><strong id="totalExpenses">$0</strong></div>
             </div>
            
@@ -492,7 +533,7 @@
                 <canvas id="donutChart"></canvas>
             </div>
 
-            <h3 style="margin-top: 20px;">Fitimi Vjetor Neto (Vit pas Viti)</h3>
+            <h3 style="margin-top: 20px;">Te Ardhurat Vjetore Neto (Vit pas Viti)</h3>
             <div class="chart-wrapper">
                 <canvas id="lineChart"></canvas>
             </div>
@@ -559,9 +600,13 @@
 
         // --- INPUTS ---
         const price = parseFloat(document.getElementById('price').value) || 0;
+        const closingCosts = parseFloat(document.getElementById('closingCosts').value) || 0;
         const isCash = document.getElementById('cashPurchase').checked;
        
-        const annualPropTax = parseFloat(document.getElementById('annualTax').value) || 0;
+        // NEW TAX LOGIC
+        const taxRate = parseFloat(document.getElementById('taxType').value) || 0;
+        const annualPropTax = price * (taxRate / 100);
+
         const annualInsurance = parseFloat(document.getElementById('annualInsurance').value) || 0;
        
         const rawRent = parseFloat(document.getElementById('rent').value) || 0;
@@ -569,28 +614,32 @@
 
         const maintenanceRate = parseFloat(document.getElementById('maintenanceRate').value) || 0;
         const incomeTaxRate = parseFloat(document.getElementById('incomeTaxRate').value) || 0;
+        
         const rentGrowth = parseFloat(document.getElementById('rentIncrease').value) || 0;
+        const appreciationRate = parseFloat(document.getElementById('appreciationRate').value) || 0;
 
         // --- ACQUISITION ---
         let downPayment = price; 
         let mortgagePayment = 0;
+        let loanAmount = 0;
+        let monthlyInterestRate = 0;
 
         if (!isCash) {
             const downPercent = parseFloat(document.getElementById('downPaymentPercent').value) || 0;
             downPayment = price * (downPercent / 100);
-            const loanAmount = price - downPayment;
+            loanAmount = price - downPayment;
            
             const rate = parseFloat(document.getElementById('interestRate').value) || 0;
             const years = parseFloat(document.getElementById('loanTerm').value) || 0;
            
             if (rate > 0 && years > 0) {
-                const monthlyRate = (rate / 100) / 12;
+                monthlyInterestRate = (rate / 100) / 12;
                 const numberOfPayments = years * 12;
-                mortgagePayment = (loanAmount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -numberOfPayments));
+                mortgagePayment = (loanAmount * monthlyInterestRate) / (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments));
             }
         }
 
-        const totalInitialInvestment = downPayment;
+        const totalInitialInvestment = downPayment + closingCosts;
 
         // --- YEAR 1 OPERATIONS (MONTHLY) ---
         const vacancyCost = rawRent * (vacancyRate / 100);
@@ -637,14 +686,18 @@
         updateDonut(mortgagePayment, taxCost+insCost, vacancyCost+maintenanceCost, incomeTaxCost, netCashFlow);
        
         updateProjection(
+            price,
+            loanAmount,
+            monthlyInterestRate,
+            mortgagePayment,
             rawRent, 
-            mortgagePayment, 
             annualPropTax, 
             annualInsurance, 
             vacancyRate, 
             maintenanceRate, 
             incomeTaxRate, 
             rentGrowth,
+            appreciationRate,
             currencyCode
         );
     }
@@ -658,7 +711,7 @@
         donutChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Kredia', 'Taks Prone & Sigurimi', 'Rregullimet', 'Tatim Fitmi', 'Fitimi'],
+                labels: ['Kredia', 'Taksa & Sigurimi', 'Riparimet', 'Tatim Fitimi', 'Fitimi'],
                 datasets: [{
                     data: [mortgage, fixedOps, variableOps, tax, safeProfit],
                     backgroundColor: ['#4338ca', '#f59e0b', '#64748b', '#a855f7', '#10b981'],
@@ -673,68 +726,137 @@
         });
     }
 
-    // --- ANNUAL PROFIT GRAPH ---
-    function updateProjection(startRent, mortgage, startTax, startIns, vacRate, maintRate, taxRate, rentGrowth, currencyCode) {
+    // --- STACKED BAR CHART: CASH FLOW vs EQUITY vs APPRECIATION ---
+    function updateProjection(
+        startPrice,
+        startLoanBalance,
+        monthlyInterestRate,
+        fixedMortgagePayment,
+        startRent, 
+        startTax, 
+        startIns, 
+        vacRate, 
+        maintRate, 
+        taxRate, 
+        rentGrowth, 
+        appreciationRate,
+        currencyCode
+    ) {
         const ctx = document.getElementById('lineChart').getContext('2d');
         if (lineChart) lineChart.destroy();
 
         const labels = [];
-        const profitData = [];
+        const cashFlowData = [];
+        const equityData = [];
+        const appreciationData = [];
        
-        let currentTax = startTax / 12;
-        let currentIns = startIns / 12;
+        let currentTax = startTax / 12; 
+        let currentIns = startIns / 12; 
         const annualRentIncreaseAmount = startRent * (rentGrowth / 100);
+        
+        let currentLoanBalance = startLoanBalance;
+        let currentPropertyValue = startPrice;
 
         for (let i = 1; i <= 30; i++) {
-            labels.push(`Y${i}`);
-           
+            labels.push(`Viti ${i}`);
+            
+            // 1. Calculate Annual Cash Flow
             let monthlyRent = startRent + (annualRentIncreaseAmount * (i - 1));
             let annualRent = monthlyRent * 12;
             let vacancyLoss = annualRent * (vacRate/100);
             let effectiveAnnualRent = annualRent - vacancyLoss;
             let annualMaint = effectiveAnnualRent * (maintRate/100);
             let annualFixedOps = (currentTax * 12) + (currentIns * 12);
-            let annualMortgage = mortgage * 12;
+            let annualMortgage = fixedMortgagePayment * 12;
            
             let preTaxProfit = effectiveAnnualRent - annualFixedOps - annualMaint - annualMortgage;
             let taxBill = 0;
             if (preTaxProfit > 0) {
                 taxBill = preTaxProfit * (taxRate / 100);
             }
-            let netAnnualProfit = preTaxProfit - taxBill;
-           
-            profitData.push(netAnnualProfit);
-            currentTax *= 1.00; 
-            currentIns *= 1.00;
+            let netAnnualCashFlow = preTaxProfit - taxBill;
+
+            // 2. Calculate Principal Paydown (Equity)
+            let annualPrincipalPaid = 0;
+            if (currentLoanBalance > 0) {
+                for (let m = 0; m < 12; m++) {
+                    if (currentLoanBalance <= 0) break;
+                    let interestPayment = currentLoanBalance * monthlyInterestRate;
+                    let principalPayment = fixedMortgagePayment - interestPayment;
+                    if (principalPayment > currentLoanBalance) principalPayment = currentLoanBalance;
+                    
+                    annualPrincipalPaid += principalPayment;
+                    currentLoanBalance -= principalPayment;
+                }
+            }
+
+            // 3. Calculate Appreciation
+            let appreciationAmount = currentPropertyValue * (appreciationRate / 100);
+            currentPropertyValue += appreciationAmount;
+
+            // Push specific segments to arrays
+            cashFlowData.push(netAnnualCashFlow > 0 ? netAnnualCashFlow : 0);
+            equityData.push(annualPrincipalPaid);
+            appreciationData.push(appreciationAmount);
         }
 
         lineChart = new Chart(ctx, {
             type: 'bar', 
             data: {
                 labels: labels,
-                datasets: [{
-                    label: 'Annual Net Profit',
-                    data: profitData,
-                    backgroundColor: '#10b981', 
-                    borderRadius: 2
-                }]
+                datasets: [
+                    {
+                        label: 'Te Ardhurat Vjetore',
+                        data: cashFlowData,
+                        backgroundColor: '#10b981', // Green
+                        stack: 'Stack 0',
+                    },
+                    {
+                        label: 'Ndertim Asetesh',
+                        data: equityData,
+                        backgroundColor: '#4338ca', // Blue
+                        stack: 'Stack 0',
+                    },
+                    {
+                        label: 'Vlersimi i Prones',
+                        data: appreciationData,
+                        backgroundColor: '#f59e0b', // Amber/Orange
+                        borderRadius: 4, // Round top only
+                        stack: 'Stack 0',
+                    }
+                ]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
                 plugins: { 
-                    legend: { display: false },
+                    legend: { 
+                        display: true,
+                        position: 'bottom',
+                        labels: { boxWidth: 12, font: { size: 10 } }
+                    },
                     tooltip: {
                         callbacks: {
                             label: function(context) {
-                                let val = context.raw;
-                                return new Intl.NumberFormat('en-US', { style: 'currency', currency: currencyCode, maximumFractionDigits: 0 }).format(val);
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += new Intl.NumberFormat('en-US', { style: 'currency', currency: currencyCode, maximumFractionDigits: 0 }).format(context.parsed.y);
+                                }
+                                return label;
                             }
                         }
                     }
                 },
                 scales: {
                     y: { 
+                        stacked: true,
                         beginAtZero: true,
                         ticks: { 
                             callback: (val) => {
@@ -744,7 +866,11 @@
                         },
                         grid: { borderDash: [5, 5] }
                     },
-                    x: { grid: { display: false }, ticks: { maxTicksLimit: 10 } }
+                    x: { 
+                        stacked: true,
+                        grid: { display: false }, 
+                        ticks: { maxTicksLimit: 10 } 
+                    }
                 }
             }
         });
