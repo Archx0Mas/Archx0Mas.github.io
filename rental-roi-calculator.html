@@ -674,12 +674,14 @@
         const netCashFlow = preTaxCashFlow - incomeTaxCost;
         const totalOutflow = mortgagePayment + operatingExpenses + incomeTaxCost + vacancyCost;
 
-        // --- METRICS ---
-        // We use preTaxCashFlow (which includes Property Tax expense, but excludes Personal Income Tax)
-        const annualPreTaxCashFlow = preTaxCashFlow * 12;
-        const annualNOI = noi * 12;
-        const capRate = price > 0 ? (annualNOI / price) * 100 : 0;
-        const cocRoi = totalInitialInvestment > 0 ? (annualPreTaxCashFlow / totalInitialInvestment) * 100 : 0;
+      // --- METRICS ---
+const annualCashFlow = netCashFlow * 12; // Still used for the "Annual Profit Net" text
+const annualNOI = noi * 12;
+const capRate = price > 0 ? (annualNOI / price) * 100 : 0;
+
+// FIX: Created specific variable for ROI using preTaxCashFlow
+const annualPreTaxCashFlow = preTaxCashFlow * 12; 
+const cocRoi = totalInitialInvestment > 0 ? (annualPreTaxCashFlow / totalInitialInvestment) * 100 : 0;
 
         // --- UI UPDATES ---
         const cfEl = document.getElementById('monthlyCashFlow');
