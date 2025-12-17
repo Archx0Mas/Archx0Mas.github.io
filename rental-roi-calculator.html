@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sq">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LLogaritesi i Qeras - Llogarit ROI-n e Qerase</title>
+    <title>Llogaritësi i Qirasë - Llogarit ROI-në e Qirasë</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -118,10 +118,10 @@
         .input-icon-group { position: relative; display: flex; align-items: center; }
         .input-icon-group i { position: absolute; left: 12px; color: #94a3b8; font-size: 0.9em; pointer-events: none; z-index: 2; }
 
-        /* INPUT & SELECT STYLING - Fixed padding for Select */
+        /* INPUT & SELECT STYLING */
         input[type="number"], select {
             width: 100%;
-            padding: 12px 12px 12px 40px; /* Increased padding-left to clear the icon */
+            padding: 12px 12px 12px 40px; 
             border: 1px solid #cbd5e1;
             border-radius: 8px;
             font-size: 0.95rem;
@@ -129,17 +129,16 @@
             background: #f8fafc;
             font-weight: 500;
             box-sizing: border-box;
-            appearance: none; /* Removes default browser arrow */
+            appearance: none;
             -webkit-appearance: none;
         }
         
-        /* Custom arrow for select */
         select {
             background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
             background-repeat: no-repeat;
             background-position: right 12px center;
             background-size: 16px;
-            padding-right: 40px; /* Space for the arrow */
+            padding-right: 40px;
             cursor: pointer;
         }
 
@@ -258,6 +257,15 @@
             opacity: 1;
         }
 
+        .stat-label-flex {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.7em;
+            color: #64748b;
+        }
+
         @media (max-width: 600px) {
             .tooltip .tooltip-text {
                 width: 180px;
@@ -274,8 +282,8 @@
     <div class="input-column">
         
         <div class="main-header">
-            <h1>LLogaritesi i te Ardhurave te Qeras</h1>
-            <p>Llogaritni fitimin mujor nga qeraja, fitimin vjetor neto te qeras dhe projektimin e rritjes se qeras per 30 vjet. Vereni: R.O.I do te thote kthimi nga investimi (Return On Investment).</p>
+            <h1>Llogaritësi i të Ardhurave të Qirasë</h1>
+            <p>Llogaritni fitimin mujor nga qiraja, fitimin vjetor neto të qirasë dhe projektimin e rritjes së qirasë për 30 vjet. Vëreni: R.O.I do të thotë Kthimi nga Investimi (Return On Investment).</p>
         </div>
 
         <div class="disclaimer-box">
@@ -283,13 +291,13 @@
                 <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
             </svg>
             <div>
-                <strong>Kujdes:</strong> Rezultatet e këtij kalkulatori janë vetëm për orientim. Kostot aktuale, normat e interesit dhe kushtet mund të ndryshojnë nga banka në bankë nese merni nje prone me kredi. Kontaktoni institucionin tuaj financiar për oferta të sakta dhe të personalizuara.
+                <strong>Kujdes:</strong> Rezultatet e këtij kalkulatori janë vetëm për orientim. Kostot aktuale, normat e interesit dhe kushtet mund të ndryshojnë nga banka në bankë nëse merrni një pronë me kredi. Kontaktoni institucionin tuaj financiar për oferta të sakta dhe të personalizuara.
             </div>
         </div>
 
         <div class="card" style="padding: 15px; display: flex; align-items: center; justify-content: space-between;">
             <label style="margin:0; font-size: 1rem; color: var(--primary); font-weight: 700; cursor:pointer; width: auto;" for="currencySelector">
-                <span><i class="fas fa-globe"></i> Zgjidh Monedhen </span>
+                <span><i class="fas fa-globe"></i> Zgjidhni Monedhën </span>
             </label>
             <div style="width: 200px;">
                 <select id="currencySelector" onchange="calculate()">
@@ -306,10 +314,10 @@
             <div class="input-grid">
                 <div class="input-wrapper">
                     <label>
-                        Vlera e Prones
+                        Vlera e Pronës
                         <div class="tooltip" onclick="toggleTooltip(this, event)">
                             <i class="fas fa-question-circle"></i>
-                            <span class="tooltip-text">Vendos shumen totale te vleres se prones.</span>
+                            <span class="tooltip-text">Vendosni shumën totale të vlerës së pronës.</span>
                         </div>
                     </label>
                     <div class="input-icon-group">
@@ -319,10 +327,10 @@
                 </div>
                 <div class="input-wrapper">
                     <label>
-                        Kosto e Mbylljes
+                        Kostoja e Mbylljes
                         <div class="tooltip" onclick="toggleTooltip(this, event)">
                             <i class="fas fa-question-circle"></i>
-                            <span class="tooltip-text">Pagesa Totale per Transaksionin e Blerjes se Prones (Noteri, Taks, Agjenci).</span>
+                            <span class="tooltip-text">Pagesa Totale për Transaksionin e Blerjes së Pronës (Noteri, Taksa, Agjenci).</span>
                         </div>
                     </label>
                     <div class="input-icon-group">
@@ -333,7 +341,7 @@
             </div>
 
             <div class="toggle-box" style="margin-top: 15px;">
-                <span class="toggle-label"><i class="fas fa-money-bill-wave"></i> E Blet te Gjith Pronen ne Cash? Nese po, selekto kutin! </span>
+                <span class="toggle-label"><i class="fas fa-money-bill-wave"></i> E bletë të gjithë pronën me Cash? Nëse po, selektoni kutinë! </span>
                 <input type="checkbox" id="cashPurchase" onchange="toggleMortgageInputs()">
             </div>
 
@@ -341,10 +349,10 @@
                 <div class="input-grid">
                     <div class="input-wrapper">
                         <label>
-                             Parapagim (%)
+                             Parapagimi (%)
                             <div class="tooltip" onclick="toggleTooltip(this, event)">
                                 <i class="fas fa-question-circle"></i>
-                                <span class="tooltip-text">Vendos shumen ne perqindje që do të paguani nga xhepi juaj (jo kredi). Bankat zakonisht kërkojnë 15-20% paradhënie për hipotekë. Më shumë paradhënie = normë më e mirë.</span>
+                                <span class="tooltip-text">Vendosni shumën në përqindje që do të paguani nga xhepi juaj (jo kredi). Bankat zakonisht kërkojnë 15-20% paradhënie për hipotekë. Më shumë paradhënie = normë më e mirë.</span>
                             </div>
                         </label>
                         <div class="input-icon-group">
@@ -357,7 +365,7 @@
                             Norma e Interesit Vjetor (%)
                             <div class="tooltip" onclick="toggleTooltip(this, event)">
                                 <i class="fas fa-question-circle"></i>
-                                <span class="tooltip-text">Vendos normen NOMINALE vjetore te interesit që banka ofron (p.sh. 8.5%). Kjo është vetëm interesi - NEI (norma efektive) do të jetë më e lartë sepse përfshin tarifat. Në Shqipëri: ALL 7-10%, EUR 4-7%.</span>
+                                <span class="tooltip-text">Vendosni normën NOMINALE vjetore të interesit që ofron banka (p.sh. 8.5%). Kjo është vetëm interesi - NEI (norma efektive) do të jetë më e lartë sepse përfshin tarifat. Në Shqipëri: ALL 7-10%, EUR 4-7%.</span>
                             </div>
                         </label>
                         <div class="input-icon-group">
@@ -368,10 +376,10 @@
                 </div>
                 <div class="input-wrapper" style="margin-top: 15px;">
                     <label>
-                         Përcakto Kohën e Kredis (Vite)
+                         Përcaktoni Kohëzgjatjen e Kredisë (Vite)
                         <div class="tooltip" onclick="toggleTooltip(this, event)">
                             <i class="fas fa-question-circle"></i>
-                            <span class="tooltip-text">Vendos afatin në vite te kredis (p.sh. 20).</span>
+                            <span class="tooltip-text">Vendosni afatin në vite të kredisë (p.sh. 20).</span>
                         </div>
                     </label>
                     <div class="input-icon-group">
@@ -383,14 +391,14 @@
         </div>
 
         <div class="card">
-            <h2><i class="fas fa-wallet"></i> Te Ardhurat & Shpenzimet </h2>
+            <h2><i class="fas fa-wallet"></i> Të Ardhurat & Shpenzimet </h2>
             <div class="input-grid">
                 <div class="input-wrapper">
                     <label>
-                        Te Ardhurat Mujore Te Qeras
+                        Të Ardhurat Mujore të Qirasë
                         <div class="tooltip" onclick="toggleTooltip(this, event)">
                             <i class="fas fa-question-circle"></i>
-                            <span class="tooltip-text">Vendos shumen mujore te paras qe merni nga dhenia me qera e prones.</span>
+                            <span class="tooltip-text">Vendosni shumën mujore të parasë që merrni nga dhënia me qira e pronës.</span>
                         </div>
                     </label>
                     <div class="input-icon-group">
@@ -404,17 +412,17 @@
             <div class="input-grid">
                 <div class="input-wrapper">
                     <label>
-                         Taksa e Prones
+                         Taksa e Pronës
                         <div class="tooltip" onclick="toggleTooltip(this, event)">
                             <i class="fas fa-question-circle"></i>
-                            <span class="tooltip-text">Zgjidh taksen e duhur vjetore ne baz te llojit te prones (per resident = taksa 0.05%).</span>
+                            <span class="tooltip-text">Zgjidhni taksën e duhur vjetore në bazë të llojit të pronës (për rezident = taksa 0.05%).</span>
                         </div>
                     </label>
                     <div class="input-icon-group">
                         <i class="fas fa-file-invoice"></i>
                         <select id="taxType" onchange="calculate()">
-                            <option value="0.05">Resident (0.05%)</option>
-                            <option value="0.15">Industri & Bujqesi (0.15%)</option>
+                            <option value="0.05">Rezident (0.05%)</option>
+                            <option value="0.15">Industri & Bujqësi (0.15%)</option>
                             <option value="0.15">Tregtare (0.15%)</option>
                         </select>
                     </div>
@@ -422,10 +430,10 @@
 
                 <div class="input-wrapper">
                     <label>
-                         Sigurimi i Prones
+                         Sigurimi i Pronës
                         <div class="tooltip" onclick="toggleTooltip(this, event)">
                             <i class="fas fa-question-circle"></i>
-                            <span class="tooltip-text">Vendos koston totale vjetore te sigurimit te prones. Pagesa varet nga zona ku ndodhet prona dhe nga madhesia e prones.</span>
+                            <span class="tooltip-text">Vendosni koston totale vjetore të sigurimit të pronës. Pagesa varet nga zona ku ndodhet prona dhe nga madhësia e pronës.</span>
                         </div>
                     </label>
                     <div class="input-icon-group">
@@ -438,7 +446,7 @@
                         Riparimet (%)
                         <div class="tooltip" onclick="toggleTooltip(this, event)">
                             <i class="fas fa-question-circle"></i>
-                            <span class="tooltip-text">Vendos sa % e paras qe fiton nga qeraja te shkon per rregullime te prones.</span>
+                            <span class="tooltip-text">Vendosni sa % e parasë që fitoni nga qiraja shkon për rregullime të pronës.</span>
                         </div>
                     </label>
                     <div class="input-icon-group">
@@ -451,7 +459,7 @@
                          Tatim Fitimi (%)
                         <div class="tooltip" onclick="toggleTooltip(this, event)">
                             <i class="fas fa-question-circle"></i>
-                            <span class="tooltip-text">Vendos sa % te taton shteti per te ardhurat nga qeraja ne vit. Ne Shqiperi eshte 15%.</span>
+                            <span class="tooltip-text">Vendosni sa % ju taton shteti për të ardhurat nga qiraja në vit. Në Shqipëri është 15%.</span>
                         </div>
                     </label>
                     <div class="input-icon-group">
@@ -463,14 +471,14 @@
         </div>
 
         <div class="card">
-            <h2><i class="fas fa-chart-line"></i>  Rritja e Qerase & Vleres se Prones </h2>
+            <h2><i class="fas fa-chart-line"></i> Rritja e Qirasë & Vlerës së Pronës </h2>
             <div class="input-grid">
                 <div class="input-wrapper">
                     <label>
-                        Norma Vjetore e Rritjes se Qerase (%)
+                        Norma Vjetore e Rritjes së Qirasë (%)
                         <div class="tooltip" onclick="toggleTooltip(this, event)">
                             <i class="fas fa-question-circle"></i>
-                            <span class="tooltip-text">Vendos sa % ne vit mund te rritet qeraja juaj. Norma Baze e rritjes esht 3%.</span>
+                            <span class="tooltip-text">Vendosni sa % në vit mund të rritet qiraja juaj. Norma bazë e rritjes është 3%.</span>
                         </div>
                     </label>
                     <div class="input-icon-group">
@@ -480,10 +488,10 @@
                 </div>
                 <div class="input-wrapper">
                     <label>
-                        Norma Vjetore e Rritjes se Vleres se Prones (%)
+                        Norma Vjetore e Rritjes së Vlerës së Pronës (%)
                         <div class="tooltip" onclick="toggleTooltip(this, event)">
                             <i class="fas fa-question-circle"></i>
-                            <span class="tooltip-text">Vendos sa % ne vit mund te rritet vlera e prones tuaj.</span>
+                            <span class="tooltip-text">Vendosni sa % në vit mund të rritet vlera e pronës suaj.</span>
                         </div>
                     </label>
                     <div class="input-icon-group">
@@ -492,7 +500,7 @@
                     </div>
                 </div>
             </div>
-            <button class="calc-btn" onclick="calculate()">LLogarit R.O.I e Qerase</button>
+            <button class="calc-btn" onclick="calculate()">Llogarit R.O.I e Qirasë</button>
         </div>
 
     </div>
@@ -501,22 +509,22 @@
         <div class="card">
             <div class="results-header">
                 <span class="big-number" id="monthlyCashFlow">$0</span>
-                <div class="big-label">Te Ardhurat Mujore Neto</div>
+                <div class="big-label">Të Ardhurat Mujore Neto</div>
             </div>
 
             <div class="wealth-box">
                 <div class="big-number" id="annualProfitNet">$0</div>
-                <div class="big-label">Te Ardhurat Vjetore Neto</div>
+                <div class="big-label">Të Ardhurat Vjetore Neto</div>
             </div>
 
-                 <div class="stat-grid">
+                <div class="stat-grid">
                 <div class="stat-box">
                     <div id="cocRoi" style="font-weight: 800; color: var(--primary);">0%</div>
                     <div class="stat-label-flex">
                         Cash on Cash R.O.I
                         <div class="tooltip" onclick="toggleTooltip(this, event)">
                             <i class="fas fa-question-circle"></i>
-                            <span class="tooltip-text"> Cash on Cash: Te ardhurat vjetore te qerase neto pjesëtuar me totalin e parave qe keni investuar. Mat performancën e investimit ne prone duke perfshire dhe kredin ne llogaritje.</span>
+                            <span class="tooltip-text"> Cash on Cash: Të ardhurat vjetore neto të qirasë pjesëtuar me totalin e parave që keni investuar. Mat performancën e investimit në pronë duke përfshirë edhe kredinë në llogaritje.</span>
                         </div>
                     </div>
                 </div>
@@ -526,26 +534,26 @@
                         Cap Rate
                         <div class="tooltip" onclick="toggleTooltip(this, event)">
                             <i class="fas fa-question-circle"></i>
-                            <span class="tooltip-text"> Cap Rate: Të ardhurat vjetore te qerase bruto pjesëtuar me vleren e blerjes se prones. Mat performancën e investimit ne prone duke injoruar shpenzimet e kredis.</span>
+                            <span class="tooltip-text"> Cap Rate: Të ardhurat operative neto pjesëtuar me vlerën e blerjes së pronës. Mat performancën e investimit në pronë duke injoruar shpenzimet e kredisë.</span>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div style="background: #f8fafc; padding: 15px; border-radius: 8px;">
-                <div class="breakdown-row"><span>Kostoja Mujore e Kredise</span><strong id="piPayment">$0</strong></div>
-                <div class="breakdown-row"><span>Kostoja e Takses se Prones & Sigurimit</span><strong id="taxInsPayment">$0</strong></div>
-                <div class="breakdown-row"><span>Kostoja e Riparimeve te Prones</span><strong id="vacMaintPayment">$0</strong></div>
+                <div class="breakdown-row"><span>Kostoja Mujore e Kredisë</span><strong id="piPayment">$0</strong></div>
+                <div class="breakdown-row"><span>Kostoja e Taksës së Pronës & Sigurimit</span><strong id="taxInsPayment">$0</strong></div>
+                <div class="breakdown-row"><span>Kostoja e Riparimeve të Pronës</span><strong id="vacMaintPayment">$0</strong></div>
                 <div class="breakdown-row"><span>Tatim Fitimi</span><strong id="incTaxPayment" style="color:var(--primary);">$0</strong></div>
-                <div class="breakdown-row total"><span>Kostoja Mujore ne Total</span><strong id="totalExpenses">$0</strong></div>
+                <div class="breakdown-row total"><span>Kostoja Mujore në Total</span><strong id="totalExpenses">$0</strong></div>
             </div>
            
-            <h3 style="margin-top: 20px;">Grafiku i Te Ardhurave & Shpenzimeve</h3>
+            <h3 style="margin-top: 20px;">Grafiku i Të Ardhurave & Shpenzimeve</h3>
             <div class="chart-wrapper" style="height: 150px;">
                 <canvas id="donutChart"></canvas>
             </div>
 
-            <h3 style="margin-top: 20px;">Te Ardhurat Vjetore Neto (Vit pas Viti)</h3>
+            <h3 style="margin-top: 20px;">Të Ardhurat Vjetore Neto (Vit pas Viti)</h3>
             <div class="chart-wrapper">
                 <canvas id="lineChart"></canvas>
             </div>
@@ -821,19 +829,19 @@ const cocRoi = totalInitialInvestment > 0 ? (annualPreTaxCashFlow / totalInitial
                 labels: labels,
                 datasets: [
                     {
-                        label: 'Te Ardhurat Vjetore',
+                        label: 'Të Ardhurat Vjetore',
                         data: cashFlowData,
                         backgroundColor: '#10b981', // Green
                         stack: 'Stack 0',
                     },
                     {
-                        label: 'Ndertim Asetesh',
+                        label: 'Ndërtim Asetesh',
                         data: equityData,
                         backgroundColor: '#4338ca', // Blue
                         stack: 'Stack 0',
                     },
                     {
-                        label: 'Vlersimi i Prones',
+                        label: 'Vlerësimi i Pronës',
                         data: appreciationData,
                         backgroundColor: '#f59e0b', // Amber/Orange
                         borderRadius: 4, // Round top only
