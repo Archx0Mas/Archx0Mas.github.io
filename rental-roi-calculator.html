@@ -37,8 +37,17 @@
             align-items: start;
         }
 
+        /* MOBILE LAYOUT ADJUSTMENTS */
         @media (max-width: 900px) {
             .app-container { grid-template-columns: 1fr; }
+            
+            /* FIX FOR MOBILE TABLE VISIBILITY: 
+               On mobile, we un-stick the sidebar so it flows naturally 
+               and doesn't cover the table at the bottom. */
+            .sticky-sidebar { 
+                position: static !important; 
+                top: auto !important;
+            }
         }
 
         /* TITLE STYLES */
@@ -91,7 +100,7 @@
             box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
             border: 1px solid #e2e8f0;
             margin-bottom: 20px;
-            position: relative; /* Safety for z-index */
+            position: relative; 
             z-index: 1;
         }
 
@@ -103,6 +112,11 @@
 
         /* INPUTS */
         .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        
+        @media (max-width: 600px) {
+            .input-grid { grid-template-columns: 1fr; }
+        }
+
         .input-wrapper { margin-bottom: 5px; }
         
         label { 
@@ -115,6 +129,7 @@
             margin-bottom: 6px; 
             color: var(--text-muted); 
             position: relative; 
+            flex-wrap: wrap; 
         }
 
         .input-icon-group { position: relative; display: flex; align-items: center; }
@@ -203,14 +218,12 @@
 
         .chart-wrapper { height: 250px; width: 100%; position: relative; margin-top: 15px; }
 
-        /* TABLE STYLES - FIXED ALIGNMENT & NO SCROLL */
+        /* TABLE STYLES */
         .data-table-container {
             width: 100%;
             margin-top: 30px;
             border-radius: 12px;
             border: 1px solid #e2e8f0;
-            /* Removed internal scroll to fix "overlap" issues */
-            /* max-height: 500px; overflow-y: auto; */
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
         table {
@@ -219,11 +232,11 @@
             border-spacing: 0;
             font-size: 0.9rem;
             background: white;
-            table-layout: fixed; /* Forces strict column widths */
+            /* Removed table-layout: fixed to allow auto-sizing */
         }
         th, td {
-            padding: 10px;
-            text-align: left;
+            padding: 12px 15px;
+            text-align: left; 
             border-bottom: 1px solid #e2e8f0;
             word-wrap: break-word;
         }
@@ -234,14 +247,7 @@
             text-transform: uppercase;
             font-size: 0.75rem;
             letter-spacing: 0.5px;
-            /* Removed sticky header to avoid graphical overlap issues */
         }
-        
-        /* COLUMN WIDTHS - Keeping Equity near Kredia */
-        th:nth-child(1), td:nth-child(1) { width: 10%; text-align: center; } /* Viti (Small) */
-        th:nth-child(2), td:nth-child(2) { width: 30%; } /* Kredia */
-        th:nth-child(3), td:nth-child(3) { width: 30%; } /* Ekuiteti (Close to Kredia) */
-        th:nth-child(4), td:nth-child(4) { width: 30%; } /* Empty space */
         
         tr:last-child td { border-bottom: none; }
         tbody tr:nth-child(even) { background-color: #fafafa; }
@@ -249,7 +255,7 @@
         .negative-val { color: var(--danger); font-weight: 600; }
         .positive-val { color: var(--accent); font-weight: 600; }
 
-        /* TOOLTIP STYLES */
+        /* TOOLTIP STYLES - REVISED FOR BETTER FIT */
         .tooltip {
             position: relative;
             display: inline-flex;
@@ -259,29 +265,32 @@
             color: var(--primary);
             width: 20px; 
             height: 20px;
-            z-index: 10;
+            z-index: 100; /* High z-index to stay on top */
         }
 
         .tooltip .tooltip-text {
             visibility: hidden;
-            width: 200px;
+            width: max-content; /* Allow width to grow */
+            max-width: 280px;   /* But cap it so it wraps */
+            min-width: 200px;
             background-color: #334155;
             color: #fff;
             text-align: center;
             border-radius: 6px;
             padding: 10px;
             position: absolute;
-            z-index: 9999;
+            z-index: 1000;
             bottom: 135%; 
             left: 50%;
-            margin-left: -100px; 
+            transform: translateX(-50%);
             opacity: 0;
             transition: opacity 0.2s;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             line-height: 1.4;
             font-weight: 400;
             box-shadow: 0 4px 10px rgba(0,0,0,0.25);
             pointer-events: none;
+            white-space: normal; /* Force wrap if too long */
         }
 
         .tooltip .tooltip-text::after {
@@ -304,6 +313,20 @@
             opacity: 1;
         }
 
+        /* MOBILE FIX FOR TOOLTIPS */
+        @media (max-width: 600px) {
+            .tooltip .tooltip-text {
+                max-width: 240px; 
+                left: auto;
+                right: -20px; 
+                transform: none; 
+            }
+            .tooltip .tooltip-text::after {
+                left: auto;
+                right: 25px; 
+            }
+        }
+
         .stat-label-flex {
             display: flex;
             justify-content: center;
@@ -311,13 +334,6 @@
             gap: 5px;
             font-size: 0.7em;
             color: #64748b;
-        }
-
-        @media (max-width: 600px) {
-            .tooltip .tooltip-text {
-                width: 180px;
-                margin-left: -90px;
-            }
         }
     </style>
 </head>
@@ -525,7 +541,7 @@
                         Norma Vjetore e Rritjes së Qirasë (%)
                         <div class="tooltip" onclick="toggleTooltip(this, event)">
                             <i class="fas fa-question-circle"></i>
-                            <span class="tooltip-text">Vendosni sa % në vit mund të rritet qiraja juaj. Norma bazë e rritjes është 3%.</span>
+                            <span class="tooltip-text">Vendosni sa % në vit rritet qiraja juaj. Norma bazë e rritjes është 3%.</span>
                         </div>
                     </label>
                     <div class="input-icon-group">
@@ -538,7 +554,7 @@
                         Norma Vjetore e Rritjes së Vlerës së Pronës (%)
                         <div class="tooltip" onclick="toggleTooltip(this, event)">
                             <i class="fas fa-question-circle"></i>
-                            <span class="tooltip-text">Vendosni sa % në vit mund të rritet vlera e pronës suaj.</span>
+                            <span class="tooltip-text">Vendosni sa % në vit rritet vlera e pronës suaj.</span>
                         </div>
                     </label>
                     <div class="input-icon-group">
@@ -600,7 +616,7 @@
                 <canvas id="donutChart"></canvas>
             </div>
 
-            <h3 style="margin-top: 20px;">Grafiku i Te Ardhurave Vjetore</h3>
+            <h3 style="margin-top: 20px;">Grafiku i Rritjes se Vleres se Pronës & Te ardhurat e Akumuluara (30 vite)</h3>
             <div class="chart-wrapper">
                 <canvas id="lineChart"></canvas>
             </div>
@@ -608,14 +624,17 @@
     </div>
 
     <div class="card" style="grid-column: 1 / -1; width: 100%; box-sizing: border-box;">
-        <h3>Tabela e [Equity Build UP] Ndertim Asetesh (30 Vite)</h3>
+        <h3>Tabela e Ekuitetit (30 Vite)</h3>
+        <p style="font-size: 0.9rem; color: #64748b; margin-top: -10px; margin-bottom: 15px; font-style: italic;">
+            Kjo tabelë tregon se si kredia ulet dhe ekuiteti/ndertimi i asetit rritet vit pas viti. [Equity Build Up]
+        </p>
         <div class="data-table-container">
             <table>
                 <thead>
                     <tr>
                         <th>Viti</th>
                         <th>Kredia e Mbetur</th>
-                        <th>Ndertim Asetesh</th>
+                        <th>Ekuiteti/Ndertim Aseti</th>
                         <th></th> </tr>
                 </thead>
                 <tbody id="projectionBody">
@@ -796,7 +815,7 @@
         donutChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Kredia', 'Taksa & Sigurimi', 'Mirëmbajtja', 'Tatim Fitimi', 'Fitimi Neto'],
+                labels: ['Kredia', 'Taksa & Sigurimi', 'Riparimet', 'Tatim Fitimi', 'Fitimi Neto'],
                 datasets: [{
                     data: [mortgage, fixedOps, variableOps, tax, safeProfit],
                     backgroundColor: ['#4338ca', '#f59e0b', '#64748b', '#a855f7', '#10b981'],
@@ -910,7 +929,7 @@
                 labels: labels,
                 datasets: [
                     {
-                        label: 'Te Ardhurat e Akumuluara',
+                        label: 'Te Ardhurat Vjetore Neto Te Akumuluara',
                         data: cumulativeCashData,
                         backgroundColor: function(context) {
                             const value = context.raw;
