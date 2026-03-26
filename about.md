@@ -10,7 +10,5 @@ He also spends sometime on hackerone platform when he is free to do some bug hun
 Self tought learner.
 Open-source projects fan.
 
-Find me on linkedin : https://www.linkedin.com/in/franko-janku
-Find me on hackerone : https://hackerone.com/mrfrank
-Find me on github : https://github.com/Archx0Mas
-Find me on HTB (Hack The Box) : https://app.hackthebox.com/profile/427356
+Links where you can find me:
+linkie.bio/frankojanku
