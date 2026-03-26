@@ -10,5 +10,4 @@ He also spends sometime on hackerone platform when he is free to do some bug hun
 Self tought learner.
 Open-source projects fan.
 
-Links where you can find me:
-linkie.bio/frankojanku
+All Links where you can find me: https://linkie.bio/frankojanku
